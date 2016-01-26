@@ -18,5 +18,8 @@
   "homepage": "https://github.com/jamesjackson/health-informatics#readme",
   "dependencies": {
     "restify": "^4.0.3"
+  },
+  "engines": {
+    "node": "5.5.0"
   }
 }
