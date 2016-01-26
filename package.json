@@ -1,5 +1,5 @@
 {
-  "name": "myhealthapp",
+  "name": "health-informatics",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/jamesjackson/health-informatics/issues"
   },
-  "homepage": "https://github.com/jamesjackson/health-informatics#readme"
+  "homepage": "https://github.com/jamesjackson/health-informatics#readme",
+  "dependencies": {
+    "restify": "^4.0.3"
+  }
 }
