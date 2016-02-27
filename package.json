@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jamesjackson/health-informatics#readme",
   "dependencies": {
+    "indico.io": "^0.6.2",
     "restify": "^4.0.3"
   },
   "engines": {

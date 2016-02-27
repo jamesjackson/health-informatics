@@ -1,0 +1,12 @@
+{
+  "device-metadata":
+  { "type": "SomeCGM",
+    "serial": "233XDH4",
+    "firmware": "1.7.3"
+  },
+  "date-retrieved": "2013-08-01T10:33:03.235145",
+  "md5": "553bd35a564c5952963ac1a76c1fb27c",
+  "rawdata": {
+    "refs": ["data.log"]
+  }
+}
