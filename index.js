@@ -10,11 +10,6 @@ indico.apiKey =  '98c1cd8fda1c2c7ea39a702e09ec0f4c';
 
 var collection = indico.Collection('my_collection4');
 
-
-function respond(req, res, next) {
-    return res.send('hello ' + req.params.name);
-};
-
 function update_fhir(photo_b64) {
 
     // Creates a JSON client
