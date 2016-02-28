@@ -6,9 +6,29 @@ var fs = require('fs');
 
 var indico = require('indico.io');
 
+var DecisionTree = require('decision-tree');
+
 indico.apiKey =  '98c1cd8fda1c2c7ea39a702e09ec0f4c';
 
 var collection = indico.Collection('my_collection4');
+
+
+var training_data = [
+    {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":false, "rash_fluid":false, "diagnosis":"measles" },
+    {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":false, "rash_fluid":true, "diagnosis":"chicken_pox" },
+    {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":true, "rash_fluid":true, "diagnosis":"chicken_pox" },
+    {"age":"child", "fever":false, "sore_throat":false, "rash_painful":true, "rash_crusty":false, "rash_fluid":true, "diagnosis":"shingles" },
+    {"age":"adult", "fever":false, "sore_throat":false, "rash_painful":true, "rash_crusty":false, "rash_fluid":true, "diagnosis":"shingles" },
+    {"age":"child", "fever":false, "sore_throat":false, "rash_painful":true, "rash_crusty":true, "rash_fluid":true, "diagnosis":"shingles" },
+    {"age":"adult", "fever":false, "sore_throat":false, "rash_painful":true, "rash_crusty":true, "rash_fluid":true, "diagnosis":"shingles" },
+    {"age":"child", "fever":false, "sore_throat":false, "rash_painful":false, "rash_crusty":false, "rash_fluid":false, "diagnosis":"ringworm" }
+];
+
+var class_name = "diagnosis";
+var features = ["age", "fever", "sore_throat", "rash_painful", "rash_crusty", "rash_fluid"];
+
+// Train the decision tree at startup
+var dt = new DecisionTree(training_data, class_name, features);
 
 function update_fhir(photo_b64) {
 
@@ -88,9 +108,21 @@ function upload_data(req, res, next) {
         collection.predict(base64data)
             .then(function(result) {
 
-                //TODO #1: Select most likely disorder (if above threshold), combine with rules engine for final decision
-
                 console.log(result);
+
+                //TODO #1: Select most likely disorder (if above threshold), combine with decision tree for final decision
+
+                //Try to predict Measles
+                var predicted_class = dt.predict({
+                    age: "child",
+                    fever: true,
+                    sore_throat: true,
+                    rash_painful: false,
+                    rash_crusty: false,
+                    rash_fluid: false
+                });
+
+                console.log(predicted_class);
 
                 //Return result to client
                 res.send(201, result);
