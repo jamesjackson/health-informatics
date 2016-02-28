@@ -1,12 +1,19 @@
 {
-  "device-metadata":
-  { "type": "SomeCGM",
-    "serial": "233XDH4",
-    "firmware": "1.7.3"
+  "symptoms":
+  { "age": "child",
+    "fever": true,
+    "sore_throat": true,
+    "rash_painful": false,
+    "rash_crusty": false,
+    "rash_fluid": false
   },
-  "date-retrieved": "2013-08-01T10:33:03.235145",
-  "md5": "553bd35a564c5952963ac1a76c1fb27c",
-  "rawdata": {
-    "refs": ["data.log"]
+  "subject":{
+    "reference":"Patient/P117"
+  },
+  "photo":{
+    "deviceName":"iPhone 6",
+    "height":350,
+    "width":80,
+    "creation":"2015-09-03"
   }
 }

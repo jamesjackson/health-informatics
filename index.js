@@ -30,7 +30,7 @@ var features = ["age", "fever", "sore_throat", "rash_painful", "rash_crusty", "r
 // Train the decision tree at startup
 var dt = new DecisionTree(training_data, class_name, features);
 
-function update_fhir(photo_b64) {
+function update_fhir(photo_b64, record) {
 
     // Creates a JSON client
     var client = restify.createJsonClient({
@@ -69,23 +69,22 @@ function update_fhir(photo_b64) {
             ]
         },
         "subject":{
-            "reference":"Patient/P117"
+            "reference":record.subject.reference
         },
-        "deviceName":"iPhone 6",
-        "height":350,
-        "width":80,
+        "deviceName":record.photo.deviceName,
+        "height":record.photo.height,
+        "width":record.photo.width,
         "frames":1,
         "content":{
             "contentType":"image/jpeg",
             "data":photo_b64,
-            "creation":"2015-09-03"
+            "creation":record.photo.creation
         }
     }
 
-    //TODO #2: Pull reference, deviceName, height, width, creation, from client provided JSON
+    //console.log(json_body);
 
-
-    //uncomment below to actually post media to UHN FHIR server
+    // Uncomment below to actually post media to UHN FHIR server
 
     //client.post(options, json_body, function(err, req, res, obj) {
     //    //assert.ifError(err);
@@ -93,7 +92,7 @@ function update_fhir(photo_b64) {
     //    console.log('%j', obj);
     //});
 
-    //TODO #3: Update patient record (which resource ?) with other symptoms, auto-diagnosis, and reference to media object
+    // TODO: Update patient record (which resource ?) with other symptoms, auto-diagnosis, and reference to media object
 
 };
 
@@ -103,35 +102,34 @@ function upload_data(req, res, next) {
     //console.log('XXXX params', req.params);
     //console.log('XXXX UPLOADED FILES', req.files);
 
-    fs.readFile(req.files.photo.path, function(err, data) {
-        base64data = new Buffer(data).toString('base64');
-        collection.predict(base64data)
-            .then(function(result) {
+    // Read JSON data
+    fs.readFile(req.files.record.path, function(err, data) {
 
-                console.log(result);
+        jsonContent = JSON.parse(data);
+        console.log(jsonContent);
 
-                //TODO #1: Select most likely disorder (if above threshold), combine with decision tree for final decision
+        // Predict diagnosis based on symptoms (local Decision Tree)
+        var predicted_class = dt.predict(jsonContent.symptoms);
+        console.log(predicted_class);
 
-                //Try to predict Measles
-                var predicted_class = dt.predict({
-                    age: "child",
-                    fever: true,
-                    sore_throat: true,
-                    rash_painful: false,
-                    rash_crusty: false,
-                    rash_fluid: false
-                });
+        // Read photo data
+        fs.readFile(req.files.photo.path, function(err, data) {
+            base64data = new Buffer(data).toString('base64');
 
-                console.log(predicted_class);
+            // Predict diagnosis based on image (remote CV/ML)
+            collection.predict(base64data)
+                .then(function(result) {
 
-                //Return result to client
-                res.send(201, result);
+                    console.log(result);
 
-                //Upload photo to FHIR server
-                update_fhir(base64data);
+                    //Return result to client
+                    res.send(201, result);
 
+                    //Upload photo to FHIR server
+                    update_fhir(base64data, jsonContent);
 
-            })
+                })
+        });
     });
 
     return next();
@@ -141,10 +139,10 @@ var server = restify.createServer();
 
 
 //Sample client (server is local)
-//curl -v -s -X POST -H '' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/upload/foo'
+//curl -v -s -X POST -H '' -F 'record=@profile.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/upload/foo'
 
 //Sample client (server is remote)
-//curl -v -s -X POST -H '' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/upload/foo'
+//curl -v -s -X POST -H '' -F 'record=@profile.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/upload/foo'
 
 server.post('/upload/:name', restify.bodyParser(), upload_data);
 
