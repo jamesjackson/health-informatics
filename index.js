@@ -1,5 +1,5 @@
 
-//TODO: test against Heroku
+//TODO: test against Heroku - DONE
 //TODO: fixup client response for practitioner lookup (return only id) - FIXED
 //TODO: fixup client response for communication - FIXED
 //TODO: get age via FHIR
@@ -7,7 +7,15 @@
 //TODO: error conditions - FIXED
 
 
-// RUNNING SERVER LOCAL
+// RESOURCES
+
+// /<patientID>/login?first_name=FREDRICA&last_name=SMITH (GET)
+// /symptomslist (GET)
+// /<patientID>/condition (multipart POST)
+// /practitioner?first_name=peter&last_name=lustig (GET)
+// /<patientID>/communication/<practitionerID> (multipart POST)
+
+// RUNNING LOCAL SERVER
 
 // curl -v 'http://localhost:8080/1671251/login?first_name=FREDRICA&last_name=SMITH'
 // curl -v 'http://localhost:8080/symptomslist'
@@ -16,7 +24,7 @@
 // curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'diagnosis=@diagnosis.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/1671251/communication/335901'
 
 
-// RUNNING SERVER HEROKU (myhealthapp.herokuapp.com)
+// RUNNING HEROKU SERVER (myhealthapp.herokuapp.com)
 
 // curl -v 'http://myhealthapp.herokuapp.com/1671251/login?first_name=FREDRICA&last_name=SMITH'
 // curl -v 'http://myhealthapp.herokuapp.com/symptomslist'
@@ -24,11 +32,7 @@
 // curl -v 'http://myhealthapp.herokuapp.com/practitioner?first_name=peter&last_name=lustig'
 // curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'diagnosis=@diagnosis.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/1671251/communication/335901'
 
-// /<patientID>/login?first_name=John&last_name=Doe (GET, validate that patient exists with this name and ID, no actual authentication)
-// /symptomslist (GET, get list of questions to ask)
-// /practitioner?first_name=Dr&last_name=Dre (GET, lookup doctor ID by name)
-// /<patientID>/condition (multipart POST of pic + symptoms, perform diagnosis)
-// /<patientID>/communication (POST, send report to doc)
+
 
 
 var restify = require('restify');

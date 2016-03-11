@@ -1,4 +1,13 @@
 
+RESOURCES
+=========
+
+/<patientID>/login?first_name=FREDRICA&last_name=SMITH (GET)
+/symptomslist (GET)
+/<patientID>/condition (multipart POST)
+/practitioner?first_name=peter&last_name=lustig (GET)
+/<patientID>/communication/<practitionerID> (multipart POST)
+
 STEP 1: LOGIN WITH PATIENT ID, FIRST NAME, LAST NAME (SERVER WILL LOOKUP ID AND CHECK THAT NAMES MATCH)
 =======================================================================================================
 
