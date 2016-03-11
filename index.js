@@ -1,7 +1,7 @@
 
 //TODO: test against Heroku
 //TODO: fixup client response for practitioner lookup (return only id) - FIXED
-//TODO: fixup client response for communication (return only id)
+//TODO: fixup client response for communication - FIXED
 //TODO: get age via FHIR
 //TODO: fix JSON encoding on communication - FIXED
 //TODO: error conditions - FIXED
@@ -11,15 +11,18 @@
 
 // curl -v 'http://localhost:8080/1671251/login?first_name=FREDRICA&last_name=SMITH'
 // curl -v 'http://localhost:8080/symptomslist'
-// curl -v 'http://localhost:8080/practitioner?first_name=peter&last_name=lustig'
 // curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/1671251/condition'
+// curl -v 'http://localhost:8080/practitioner?first_name=peter&last_name=lustig'
 // curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'diagnosis=@diagnosis.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/1671251/communication/335901'
 
 
-// RUNNING SERVER HEROKU
+// RUNNING SERVER HEROKU (myhealthapp.herokuapp.com)
 
-// curl -v -s -X POST -H '' -F 'record=@profile.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/upload/foo'
-
+// curl -v 'http://myhealthapp.herokuapp.com/1671251/login?first_name=FREDRICA&last_name=SMITH'
+// curl -v 'http://myhealthapp.herokuapp.com/symptomslist'
+// curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/1671251/condition'
+// curl -v 'http://myhealthapp.herokuapp.com/practitioner?first_name=peter&last_name=lustig'
+// curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'diagnosis=@diagnosis.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/1671251/communication/335901'
 
 // /<patientID>/login?first_name=John&last_name=Doe (GET, validate that patient exists with this name and ID, no actual authentication)
 // /symptomslist (GET, get list of questions to ask)
@@ -278,7 +281,7 @@ function doctor_communication(req1, res1, next) {
 
                     //console.log(JSON.stringify(obj, null, 2));
 
-                    res1.send(201, obj);
+                    res1.send(201, {'status' : 'created'});
                     next();
 
                 });
