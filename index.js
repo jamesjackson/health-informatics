@@ -1,10 +1,12 @@
 
 //curl -v 'http://localhost:8080/1671251/login?first_name=FREDRICA&last_name=SMITH'
+//curl -v 'http://localhost:8080/symptomslist'
 //curl -v 'http://localhost:8080/practitioner?first_name=peter&last_name=lustig'
 //curl -v -s -X POST -H '' -F 'record=@profile.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/1671251/condition'
 
 // Proposed server resources
 // /<patientID>/login?first_name=John&last_name=Doe (GET, validate that patient exists with this name and ID, no actual authentication)
+// /symptomslist (GET, get list of questions to ask)
 // /practitioner?first_name=Dr&last_name=Dre (GET, lookup doctor ID by name)
 // /<patientID>/condition (multipart POST of pic + symptoms, perform diagnosis)
 
