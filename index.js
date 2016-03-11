@@ -1,18 +1,24 @@
 
 //TODO: test against Heroku
-//TODO: fixup client response for practitioner lookup (return only id ?)
-//TODO: get age dynamically
-//TODO: fix JSON encoding on communication
-//TODO: error conditions
+//TODO: fixup client response for practitioner lookup (return only id) - FIXED
+//TODO: fixup client response for communication (return only id)
+//TODO: get age via FHIR
+//TODO: fix JSON encoding on communication - FIXED
+//TODO: error conditions - FIXED
 
 
-//curl -v -s -X POST -H '' -F 'record=@profile.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/upload/foo'
+// RUNNING SERVER LOCAL
 
-//curl -v 'http://localhost:8080/1671251/login?first_name=FREDRICA&last_name=SMITH'
-//curl -v 'http://localhost:8080/symptomslist'
-//curl -v 'http://localhost:8080/practitioner?first_name=peter&last_name=lustig'
-//curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/1671251/condition'
-//curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'diagnosis=@diagnosis.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/1671251/communication/335901'
+// curl -v 'http://localhost:8080/1671251/login?first_name=FREDRICA&last_name=SMITH'
+// curl -v 'http://localhost:8080/symptomslist'
+// curl -v 'http://localhost:8080/practitioner?first_name=peter&last_name=lustig'
+// curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/1671251/condition'
+// curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'diagnosis=@diagnosis.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/1671251/communication/335901'
+
+
+// RUNNING SERVER HEROKU
+
+// curl -v -s -X POST -H '' -F 'record=@profile.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/upload/foo'
 
 
 // /<patientID>/login?first_name=John&last_name=Doe (GET, validate that patient exists with this name and ID, no actual authentication)
@@ -34,7 +40,6 @@ indico.apiKey =  '98c1cd8fda1c2c7ea39a702e09ec0f4c';
 
 var collection = indico.Collection('my_collection4');
 
-
 var training_data = [
     {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":false, "rash_fluid":false, "diagnosis":"measles" },
     {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":false, "rash_fluid":true, "diagnosis":"chicken_pox" },
@@ -54,12 +59,15 @@ var dt = new DecisionTree(training_data, class_name, features);
 
 
 function diagnose_condition(req, res, next) {
-    //console.log('XXXX: BODY', req.body);
-    //console.log('XXXX params', req.params);
-    //console.log('XXXX UPLOADED FILES', req.files);
 
-    // Read JSON data
+    if ((!req.files.symptoms)||(!req.files.photo))
+        return next(new restify.BadRequestError ());
+
+    // Read JSON data (symptoms)
     fs.readFile(req.files.symptoms.path, function(err, data) {
+
+        if (err)
+            return next(new restify.BadRequestError ());
 
         jsonSymptoms = JSON.parse(data);
         console.log(jsonSymptoms);
@@ -70,6 +78,10 @@ function diagnose_condition(req, res, next) {
 
         // Read photo data
         fs.readFile(req.files.photo.path, function(err, data) {
+
+            if (err)
+                return next(new restify.BadRequestError ());
+
             base64data = new Buffer(data).toString('base64');
 
             // Predict diagnosis based on image (remote CV/ML)
@@ -80,37 +92,39 @@ function diagnose_condition(req, res, next) {
 
                     //Return result to client
                     res.send(201, {'decision_tree_pred' : predicted_class, 'cv_pred' : result});
+                    return next();
 
                 })
         });
     });
-
-    return next();
 };
 
 
 function lookup_patient(req1, res1, next) {
 
-// Creates a JSON client
+    // Creates a JSON client
     var client = restify.createJsonClient({
         url: 'http://fhirtest.uhn.ca'
     });
 
-
     first_name_in = req1.params.first_name;
     last_name_in = req1.params.last_name;
-    console.log(first_name_in);
-    console.log(last_name_in);
+
+    //console.log(first_name_in);
+    //console.log(last_name_in);
 
     client.get('/baseDstu2/Patient/' + req1.params.patient, function(err, req2, res2, obj) {
-        //assert.ifError(err);
+
+        if (err) {
+            res1.send(err.statusCode);
+            return next();
+        }
 
         first_name_back = obj.name[0].given[0].toString();
         last_name_back = obj.name[0].family[0].toString();
 
-        console.log(first_name_back);
-        console.log(last_name_back);
-
+        //console.log(first_name_back);
+        //console.log(last_name_back);
         //console.log(JSON.stringify(obj, null, 2));
 
         if ((last_name_back == last_name_in) && (first_name_back == first_name_in)) {
@@ -119,12 +133,9 @@ function lookup_patient(req1, res1, next) {
             next();
         } else {
             console.log("auth failure");
-            return next(new restify.InvalidCredentialsError ("I just don't like you"));
+            return next(new restify.InvalidCredentialsError ());
         }
-
-
     });
-
 };
 
 
@@ -138,19 +149,26 @@ function lookup_practitioner(req1, res1, next) {
 
     first_name_in = req1.params.first_name;
     last_name_in = req1.params.last_name;
-    console.log(first_name_in);
-    console.log(last_name_in);
+    //console.log(first_name_in);
+    //console.log(last_name_in);
 
     client.get('/baseDstu2/Practitioner?family=' + last_name_in + '&given=' + first_name_in, function(err, req2, res2, obj) {
-        //assert.ifError(err);
 
-        //console.log(JSON.stringify(obj, null, 2));
+        //console.log(JSON.stringify(obj.entry[0], null, 2));
 
-            res1.send(200, obj);
-            next();
+        if (err) {
+            res1.send(err.statusCode);
+            return next();
+        }
+
+        if (obj.total == 0) {
+            return next(new restify.NotFoundError());
+        }
+
+        res1.send(200, {'id' : obj.entry[0].resource.id, 'first_name' : obj.entry[0].resource.name.given[0], 'last_name' : obj.entry[0].resource.name.family[0]});
+        next();
 
     });
-
 };
 
 
@@ -174,8 +192,14 @@ function symptoms_list(req, res, next) {
 
 function doctor_communication(req1, res1, next) {
 
+    if ((!req1.files.symptoms)||(!req1.files.photo)||(!req1.files.diagnosis))
+        return next(new restify.BadRequestError ());
+
     // Read JSON data (symptoms)
     fs.readFile(req1.files.symptoms.path, function(err, data) {
+
+        if (err)
+            return next(new restify.BadRequestError ());
 
         jsonSymptoms = JSON.parse(data);
         console.log(jsonSymptoms);
@@ -183,11 +207,18 @@ function doctor_communication(req1, res1, next) {
         // Read JSON data (diagnosis)
         fs.readFile(req1.files.diagnosis.path, function(err, data) {
 
+            if (err)
+                return next(new restify.BadRequestError ());
+
             jsonDiagnosis = JSON.parse(data);
             console.log(jsonDiagnosis);
 
             // Read photo data
             fs.readFile(req1.files.photo.path, function(err, data) {
+
+                if (err)
+                    return next(new restify.BadRequestError ());
+
                 base64data = new Buffer(data).toString('base64');
 
                 // Creates a JSON client
@@ -219,13 +250,13 @@ function doctor_communication(req1, res1, next) {
                         {
                             "contentAttachment": {
                                 "contentType":"application/json",
-                                "data":jsonSymptoms
+                                "data":JSON.stringify(jsonSymptoms)
                             }
                         },
                         {
                             "contentAttachment": {
                                 "contentType":"application/json",
-                                "data":jsonDiagnosis
+                                "data":JSON.stringify(jsonDiagnosis)
                             }
                         }
                     ],
@@ -236,12 +267,16 @@ function doctor_communication(req1, res1, next) {
                 }
 
 
-                console.log(json_body);
+                //console.log(JSON.stringify(json_body, null, 2));
 
                 client.post('/baseDstu2/Communication', json_body,function(err, req2, res2, obj) {
-                    //assert.ifError(err);
 
-                    console.log(JSON.stringify(obj, null, 2));
+                    if (err) {
+                        res1.send(err.statusCode);
+                        return next();
+                    }
+
+                    //console.log(JSON.stringify(obj, null, 2));
 
                     res1.send(201, obj);
                     next();
