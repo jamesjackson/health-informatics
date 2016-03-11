@@ -1,0 +1,7 @@
+{
+  "decision_tree_pred": "measles",
+  "cv_pred":{
+    "ringworm":0.7947621178676422,
+    "chicken_pox":0.20523788213235783
+  }
+}

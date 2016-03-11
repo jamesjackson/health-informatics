@@ -1,16 +1,26 @@
 
+//TODO: test against Heroku
+//TODO: fixup client response for practitioner lookup (return only id ?)
+//TODO: get age dynamically
+//TODO: fix JSON encoding on communication
+//TODO: error conditions
+
+
+//curl -v -s -X POST -H '' -F 'record=@profile.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/upload/foo'
+
 //curl -v 'http://localhost:8080/1671251/login?first_name=FREDRICA&last_name=SMITH'
 //curl -v 'http://localhost:8080/symptomslist'
 //curl -v 'http://localhost:8080/practitioner?first_name=peter&last_name=lustig'
-//curl -v -s -X POST -H '' -F 'record=@profile.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/1671251/condition'
+//curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/1671251/condition'
+//curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'diagnosis=@diagnosis.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/1671251/communication/335901'
 
-// Proposed server resources
+
 // /<patientID>/login?first_name=John&last_name=Doe (GET, validate that patient exists with this name and ID, no actual authentication)
 // /symptomslist (GET, get list of questions to ask)
 // /practitioner?first_name=Dr&last_name=Dre (GET, lookup doctor ID by name)
 // /<patientID>/condition (multipart POST of pic + symptoms, perform diagnosis)
-
 // /<patientID>/communication (POST, send report to doc)
+
 
 var restify = require('restify');
 
@@ -42,70 +52,6 @@ var features = ["age", "fever", "sore_throat", "rash_painful", "rash_crusty", "r
 // Train the decision tree at startup
 var dt = new DecisionTree(training_data, class_name, features);
 
-function update_fhir(photo_b64, record) {
-
-    // Creates a JSON client
-    var client = restify.createJsonClient({
-        url: 'http://fhirtest.uhn.ca'
-    });
-
-    var options = {
-        path: '/baseDstu2/Media',
-        headers: {
-            'Accept': 'application/xml+fhir;q=1.0, application/json+fhir;q=1.0',
-            'Accept-Charset': 'utf-8',
-            'Accept-Encoding': 'gzip'
-        },
-        retry: {
-            'retries': 0
-        },
-        agent: false
-    };
-
-    var json_body = {
-        "resourceType":"Media",
-        "language":[
-            "en-US"
-        ],
-        "text":{
-            "status":"generated",
-            "div":"<div xmlns=\"http://www.w3.org/1999/xhtml\">Diagram for Patient Still Itching<img alt=\"diagram\" src=\"#11\"/> \n                                                 </div>"
-        },
-        "type":"photo",
-        "subtype":{
-            "coding":[
-                {
-                    "system":"http://hl7.org/fhir/media-method",
-                    "code":"diagram"
-                }
-            ]
-        },
-        "subject":{
-            "reference":record.subject.reference
-        },
-        "deviceName":record.photo.deviceName,
-        "height":record.photo.height,
-        "width":record.photo.width,
-        "frames":1,
-        "content":{
-            "contentType":"image/jpeg",
-            "data":photo_b64,
-            "creation":record.photo.creation
-        }
-    }
-
-    //console.log(json_body);
-
-    // Uncomment below to actually post media to UHN FHIR server
-
-    //client.post(options, json_body, function(err, req, res, obj) {
-    //    //assert.ifError(err);
-    //    console.log('%d -> %j', res.statusCode, res.headers);
-    //    console.log('%j', obj);
-    //});
-
-};
-
 
 function diagnose_condition(req, res, next) {
     //console.log('XXXX: BODY', req.body);
@@ -113,13 +59,13 @@ function diagnose_condition(req, res, next) {
     //console.log('XXXX UPLOADED FILES', req.files);
 
     // Read JSON data
-    fs.readFile(req.files.record.path, function(err, data) {
+    fs.readFile(req.files.symptoms.path, function(err, data) {
 
-        jsonContent = JSON.parse(data);
-        console.log(jsonContent);
+        jsonSymptoms = JSON.parse(data);
+        console.log(jsonSymptoms);
 
         // Predict diagnosis based on symptoms (local Decision Tree)
-        var predicted_class = dt.predict(jsonContent.symptoms);
+        var predicted_class = dt.predict(jsonSymptoms.symptoms);
         console.log(predicted_class);
 
         // Read photo data
@@ -134,9 +80,6 @@ function diagnose_condition(req, res, next) {
 
                     //Return result to client
                     res.send(201, {'decision_tree_pred' : predicted_class, 'cv_pred' : result});
-
-                    //Upload photo to FHIR server
-                    //update_fhir(base64data, jsonContent);
 
                 })
         });
@@ -184,6 +127,7 @@ function lookup_patient(req1, res1, next) {
 
 };
 
+
 function lookup_practitioner(req1, res1, next) {
 
 // Creates a JSON client
@@ -230,76 +174,86 @@ function symptoms_list(req, res, next) {
 
 function doctor_communication(req1, res1, next) {
 
-    // Creates a JSON client
-    var client = restify.createJsonClient({
-        url: 'http://fhirtest.uhn.ca'
-    });
+    // Read JSON data (symptoms)
+    fs.readFile(req1.files.symptoms.path, function(err, data) {
 
-    var options = {
-        path: '/baseDstu2/Media',
-        headers: {
-            'Accept': 'application/xml+fhir;q=1.0, application/json+fhir;q=1.0',
-            'Accept-Charset': 'utf-8',
-            'Accept-Encoding': 'gzip'
-        },
-        retry: {
-            'retries': 0
-        },
-        agent: false
-    };
+        jsonSymptoms = JSON.parse(data);
+        console.log(jsonSymptoms);
 
-    var json_body = {
-        "resourceType":"Media",
-        "language":[
-            "en-US"
-        ],
-        "text":{
-            "status":"generated",
-            "div":"<div xmlns=\"http://www.w3.org/1999/xhtml\">Diagram for Patient Still Itching<img alt=\"diagram\" src=\"#11\"/> \n                                                 </div>"
-        },
-        "type":"photo",
-        "subtype":{
-            "coding":[
-                {
-                    "system":"http://hl7.org/fhir/media-method",
-                    "code":"diagram"
+        // Read JSON data (diagnosis)
+        fs.readFile(req1.files.diagnosis.path, function(err, data) {
+
+            jsonDiagnosis = JSON.parse(data);
+            console.log(jsonDiagnosis);
+
+            // Read photo data
+            fs.readFile(req1.files.photo.path, function(err, data) {
+                base64data = new Buffer(data).toString('base64');
+
+                // Creates a JSON client
+                var client = restify.createJsonClient({
+                    url: 'http://fhirtest.uhn.ca'
+                });
+
+                var json_body = {
+                    "resourceType": "Communication",
+                    "text": {
+                        "status": "generated",
+                        "div": "<div>Message sent via Rash Analysis App</div>"
+                    },
+                    "sender": {
+                        "reference": "Patient/" + req1.params.patient
+                    },
+                    "recipient": [
+                        {
+                            "reference": "Practitioner/" + req1.params.practitioner
+                        }
+                    ],
+                    "payload": [
+                        {
+                            "contentAttachment": {
+                                "contentType":"image/jpeg",
+                                "data":base64data
+                            }
+                        },
+                        {
+                            "contentAttachment": {
+                                "contentType":"application/json",
+                                "data":jsonSymptoms
+                            }
+                        },
+                        {
+                            "contentAttachment": {
+                                "contentType":"application/json",
+                                "data":jsonDiagnosis
+                            }
+                        }
+                    ],
+                    "status": "completed",
+                    "subject": {
+                        "reference": "Patient/" + req1.params.patient
+                    }
                 }
-            ]
-        },
-        "subject":{
-            "reference":record.subject.reference
-        },
-        "deviceName":record.photo.deviceName,
-        "height":record.photo.height,
-        "width":record.photo.width,
-        "frames":1,
-        "content":{
-            "contentType":"image/jpeg",
-            "data":photo_b64,
-            "creation":record.photo.creation
-        }
-    }
 
-    //console.log(json_body);
 
-    // Uncomment below to actually post media to UHN FHIR server
+                console.log(json_body);
 
-    //client.post(options, json_body, function(err, req, res, obj) {
-    //    //assert.ifError(err);
-    //    console.log('%d -> %j', res.statusCode, res.headers);
-    //    console.log('%j', obj);
-    //});
+                client.post('/baseDstu2/Communication', json_body,function(err, req2, res2, obj) {
+                    //assert.ifError(err);
 
+                    console.log(JSON.stringify(obj, null, 2));
+
+                    res1.send(201, obj);
+                    next();
+
+                });
+            });
+        });
+    });
 };
 
+
 var server = restify.createServer();
-
-
-//Sample client (server is local)
-//curl -v -s -X POST -H '' -F 'record=@profile.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://localhost:8080/upload/foo'
-
-//Sample client (server is remote)
-//curl -v -s -X POST -H '' -F 'record=@profile.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/upload/foo'
 
 server.post('/:patient/condition', restify.bodyParser(), diagnose_condition);
 
@@ -309,7 +263,8 @@ server.get('/practitioner', restify.queryParser(), lookup_practitioner);
 
 server.get('/symptomslist', symptoms_list);
 
-server.post('/:patient/communication', restify.bodyParser(), doctor_communication);
+server.post('/:patient/communication/:practitioner', restify.bodyParser(), doctor_communication);
+
 
 server.listen(process.env.PORT || 8080, function() {
     return console.log('%s listening at %s', server.name, server.url);

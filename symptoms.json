@@ -6,14 +6,5 @@
     "rash_painful": false,
     "rash_crusty": false,
     "rash_fluid": false
-  },
-  "subject":{
-    "reference":"Patient/P117"
-  },
-  "photo":{
-    "deviceName":"iPhone 6",
-    "height":350,
-    "width":80,
-    "creation":"2015-09-03"
   }
 }
