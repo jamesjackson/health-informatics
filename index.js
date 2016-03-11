@@ -208,6 +208,24 @@ function lookup_practitioner(req1, res1, next) {
 };
 
 
+function symptoms_list(req, res, next) {
+
+    var json_body =     {
+        "symptoms": [
+            {"name": "fever", "type": "boolean", "text" : "Have you experienced a fever ?"},
+            {"name": "sore_throat", "type": "boolean", "text" : "Have you experienced a sore throat ?"},
+            {"name": "rash_painful", "type": "boolean", "text" : "Is the rash painful ?"},
+            {"name": "rash_crusty", "type": "boolean", "text" : "Is the rash crusty ?"},
+            {"name": "rash_fluid", "type": "boolean", "text" : "Is the rash fluid filled ?"}
+        ]
+    }
+
+    res.send(200, json_body);
+    next();
+
+};
+
+
 function doctor_communication(req1, res1, next) {
 
     // Creates a JSON client
@@ -286,6 +304,8 @@ server.post('/:patient/condition', restify.bodyParser(), diagnose_condition);
 server.get('/:patient/login', restify.queryParser(), lookup_patient);
 
 server.get('/practitioner', restify.queryParser(), lookup_practitioner);
+
+server.get('/symptomslist', symptoms_list);
 
 server.post('/:patient/communication', restify.bodyParser(), doctor_communication);
 
