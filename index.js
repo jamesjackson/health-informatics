@@ -45,7 +45,7 @@ var DecisionTree = require('decision-tree');
 
 indico.apiKey =  '98c1cd8fda1c2c7ea39a702e09ec0f4c';
 
-var collection = indico.Collection('my_collection4');
+var collection = indico.Collection('my_collection200');
 
 var training_data = [
     {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":false, "rash_fluid":false, "diagnosis":"measles" },
@@ -57,6 +57,7 @@ var training_data = [
     {"age":"adult", "fever":false, "sore_throat":false, "rash_painful":true, "rash_crusty":true, "rash_fluid":true, "diagnosis":"shingles" },
     {"age":"child", "fever":false, "sore_throat":false, "rash_painful":false, "rash_crusty":false, "rash_fluid":false, "diagnosis":"ringworm" }
 ];
+
 
 var class_name = "diagnosis";
 var features = ["age", "fever", "sore_throat", "rash_painful", "rash_crusty", "rash_fluid"];
