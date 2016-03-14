@@ -164,7 +164,7 @@ function lookup_practitioner(req1, res1, next) {
     //console.log(first_name_in);
     //console.log(last_name_in);
 
-    client.get('/baseDstu2/Practitioner?family=' + last_name_in + '&given=' + first_name_in, function(err, req2, res2, obj) {
+    client.get('/fhir/baseDstu2/Practitioner?family=' + last_name_in + '&given=' + first_name_in, function(err, req2, res2, obj) {
 
         //console.log(JSON.stringify(obj.entry[0], null, 2));
 
@@ -281,7 +281,7 @@ function doctor_communication(req1, res1, next) {
 
                 //console.log(JSON.stringify(json_body, null, 2));
 
-                client.post('/baseDstu2/Communication', json_body,function(err, req2, res2, obj) {
+                client.post('/fhir/baseDstu2/Communication', json_body,function(err, req2, res2, obj) {
 
                     if (err) {
                         res1.send(err.statusCode);
