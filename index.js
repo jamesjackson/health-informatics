@@ -146,6 +146,7 @@ function lookup_patient(req1, res1, next) {
         } else {
             console.log("auth failure");
             res1.send(200, {'test' : 'ok'});
+            next();
             //return next(new restify.InvalidCredentialsError ());
         }
     });
