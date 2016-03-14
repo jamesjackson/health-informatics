@@ -125,7 +125,7 @@ function lookup_patient(req1, res1, next) {
     //console.log(last_name_in);
     //console.log(req1.params);
 
-    client.get('/baseDstu2/Patient/' + req1.params.patient, function(err, req2, res2, obj) {
+    client.get('/fhir/baseDstu2/Patient/' + req1.params.patient, function(err, req2, res2, obj) {
 
         if (err) {
             res1.send(err.statusCode);
