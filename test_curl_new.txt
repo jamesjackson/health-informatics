@@ -1,0 +1,131 @@
+
+RESOURCES
+=========
+
+/<patientID>/login?first_name=Jerry&last_name=Goodwall (GET)
+/symptomslist (GET)
+/<patientID>/condition (multipart POST)
+/practitioner?first_name=Joann&last_name=Haynes (GET)
+/<patientID>/communication/<practitionerID> (multipart POST)
+
+STEP 1: LOGIN WITH PATIENT ID, FIRST NAME, LAST NAME (SERVER WILL LOOKUP ID AND CHECK THAT NAMES MATCH)
+=======================================================================================================
+
+curl -v 'http://myhealthapp.herokuapp.com/Patient-1121/login?first_name=Jerry&last_name=Goodwall'
+*   Trying 107.21.238.17...
+* Connected to myhealthapp.herokuapp.com (127.0.0.1) port 80 (#0)
+> GET /Patient-1121/login?first_name=Jerry&last_name=Goodwall HTTP/1.1
+> Host: myhealthapp.herokuapp.com
+> User-Agent: curl/7.43.0
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Server: Cowboy
+< Connection: keep-alive
+< Content-Type: application/json
+< Content-Length: 15
+< Date: Mon, 14 Mar 2016 22:11:50 GMT
+< Via: 1.1 vegur
+<
+* Connection #0 to host myhealthapp.herokuapp.com left intact
+{"status":"ok"}
+
+
+STEP 2: GET LIST OF QUESTIONS TO ASK (WE CAN UPDATE AS NEEDED SERVER-SIDE)
+==========================================================================
+
+curl -v 'http://myhealthapp.herokuapp.com/symptomslist'
+*   Trying 23.21.113.232...
+* Connected to myhealthapp.herokuapp.com (127.0.0.1) port 80 (#0)
+> GET /symptomslist HTTP/1.1
+> Host: myhealthapp.herokuapp.com
+> User-Agent: curl/7.43.0
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Server: Cowboy
+< Connection: keep-alive
+< Content-Type: application/json
+< Content-Length: 391
+< Date: Mon, 14 Mar 2016 22:12:22 GMT
+< Via: 1.1 vegur
+<
+* Connection #0 to host myhealthapp.herokuapp.com left intact
+{"symptoms":[{"name":"fever","type":"boolean","text":"Have you experienced a fever ?"},{"name":"sore_throat","type":"boolean","text":"Have you experienced a sore throat ?"},{"name":"rash_painful","type":"boolean","text":"Is the rash painful ?"},{"name":"rash_crusty","type":"boolean","text":"Is the rash crusty ?"},{"name":"rash_fluid","type":"boolean","text":"Is the rash fluid filled ?"}]}
+
+
+STEP 3: PERFORM DIAGNOSIS (SUBMIT ANSWERS AND PHOTO)
+====================================================
+
+curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/Patient-1121/condition'
+*   Trying 23.21.172.153...
+* Connected to myhealthapp.herokuapp.com (127.0.0.1) port 80 (#0)
+> POST /Patient-1121/condition HTTP/1.1
+> Host: myhealthapp.herokuapp.com
+> User-Agent: curl/7.43.0
+> Accept: */*
+> Content-Length: 38990
+> Expect: 100-continue
+> Content-Type: multipart/form-data; boundary=------------------------fa2cd93505e574ad
+>
+< HTTP/1.1 100 Continue
+< HTTP/1.1 201 Created
+< Server: Cowboy
+< Connection: keep-alive
+< Content-Type: application/json
+< Content-Length: 174
+< Date: Mon, 14 Mar 2016 22:13:59 GMT
+< Via: 1.1 vegur
+<
+* Connection #0 to host myhealthapp.herokuapp.com left intact
+{"decision_tree_pred":"measles","cv_pred":{"measles":0.02053357769080464,"ringworm":0.9791421869267338,"chicken_pox":0.000018669283289237978,"shingles":0.000305566099172444}}
+
+
+STEP 4: LOOKUP PRACTITIONER BY FIRST NAME, LAST NAME
+====================================================
+
+curl -v 'http://myhealthapp.herokuapp.com/practitioner?first_name=Joann&last_name=Haynes'
+*   Trying 54.225.209.250...
+* Connected to myhealthapp.herokuapp.com (127.0.0.1) port 80 (#0)
+> GET /practitioner?first_name=Joann&last_name=Haynes HTTP/1.1
+> Host: myhealthapp.herokuapp.com
+> User-Agent: curl/7.43.0
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Server: Cowboy
+< Connection: keep-alive
+< Content-Type: application/json
+< Content-Length: 68
+< Date: Mon, 14 Mar 2016 23:11:45 GMT
+< Via: 1.1 vegur
+<
+* Connection #0 to host myhealthapp.herokuapp.com left intact
+{"id":"Practitioner-2189","first_name":"Joann","last_name":"Haynes"}
+
+
+STEP 5: SEND PHOTO, ANSWERS, AND DIAGNOSIS TO PRACTITIONER
+==========================================================
+
+curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'diagnosis=@diagnosis.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/Patient-1121/communication/Practitioner-2189'
+*   Trying 23.23.175.105...
+* Connected to myhealthapp.herokuapp.com (127.0.0.1) port 80 (#0)
+> POST /Patient-1121/communication/Practitioner-2189 HTTP/1.1
+> Host: myhealthapp.herokuapp.com
+> User-Agent: curl/7.43.0
+> Accept: */*
+> Content-Length: 39276
+> Expect: 100-continue
+> Content-Type: multipart/form-data; boundary=------------------------6d3764a912fb7b7c
+>
+< HTTP/1.1 100 Continue
+< HTTP/1.1 201 Created
+< Server: Cowboy
+< Connection: keep-alive
+< Content-Type: application/json
+< Content-Length: 20
+< Date: Mon, 14 Mar 2016 23:14:53 GMT
+< Via: 1.1 vegur
+<
+* Connection #0 to host myhealthapp.herokuapp.com left intact
+{"status":"created"}
