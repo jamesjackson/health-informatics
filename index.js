@@ -48,7 +48,7 @@ indico.apiKey =  '98c1cd8fda1c2c7ea39a702e09ec0f4c';
 var collection = indico.Collection('my_collection200');
 
 //var URLROOT = 'http://fhirtest.uhn.ca';
-var URLROOT = "http://52.72.172.54:8080";
+var URLROOT = 'http://52.72.172.54:8080';
 
 var training_data = [
     {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":false, "rash_fluid":false, "diagnosis":"measles" },
