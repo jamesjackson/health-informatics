@@ -1,0 +1,13 @@
+{
+  "name": "font-awesome",
+  "version": "0.1.0",
+  "_release": "0.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.0",
+    "commit": "ac072dcff93af9386b9eb1f5a9f0bcb6994cb6a5"
+  },
+  "_source": "git@github.sw.ge.com:IIDx/font-awesome-standin.git",
+  "_target": "*",
+  "_originalSource": "git@github.sw.ge.com:IIDx/font-awesome-standin.git"
+}
