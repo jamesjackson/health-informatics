@@ -312,8 +312,13 @@ server.get('/symptomslist', symptoms_list);
 
 server.post('/:patient/communication/:practitioner', restify.bodyParser(), doctor_communication);
 
-server.get(/\/public\/?.*/, restify.serveStatic({
-    directory: __dirname
+//server.get(/\/public\/?.*/, restify.serveStatic({
+//    directory: __dirname
+//}));
+
+server.get(/\/?.*/, restify.serveStatic({
+    default: 'index.html',
+    directory: './public'
 }));
 
 server.listen(process.env.PORT || 8080, function() {
