@@ -28,8 +28,7 @@ function attemptLogin()
     url: "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login",
     data: { 
         first_name: first_name, 
-        last_name: last_name,
-	_sm_au_: 'iMVB7NSQ034GLL5P' 
+        last_name: last_name
     },
     cache: false,
     type: "GET",
