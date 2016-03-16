@@ -47,8 +47,8 @@ indico.apiKey =  '98c1cd8fda1c2c7ea39a702e09ec0f4c';
 
 var collection = indico.Collection('my_collection200');
 
-//var URLROOT = 'http://fhirtest.uhn.ca';
-var URLROOT = 'http://52.72.172.54:8080';
+var URLROOT = 'http://fhirtest.uhn.ca';
+//var URLROOT = 'http://52.72.172.54:8080';
 
 var training_data = [
     {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":false, "rash_fluid":false, "diagnosis":"measles" },
@@ -125,7 +125,7 @@ function lookup_patient(req1, res1, next) {
     //console.log(last_name_in);
     //console.log(req1.params);
 
-    client.get('/fhir/baseDstu2/Patient/' + req1.params.patient, function(err, req2, res2, obj) {
+    client.get('/baseDstu2/Patient/' + req1.params.patient, function(err, req2, res2, obj) {
 
         if (err) {
             res1.send(err.statusCode);
@@ -164,7 +164,7 @@ function lookup_practitioner(req1, res1, next) {
     //console.log(first_name_in);
     //console.log(last_name_in);
 
-    client.get('/fhir/baseDstu2/Practitioner?family=' + last_name_in + '&given=' + first_name_in, function(err, req2, res2, obj) {
+    client.get('/baseDstu2/Practitioner?family=' + last_name_in + '&given=' + first_name_in, function(err, req2, res2, obj) {
 
         //console.log(JSON.stringify(obj.entry[0], null, 2));
 
@@ -281,7 +281,7 @@ function doctor_communication(req1, res1, next) {
 
                 //console.log(JSON.stringify(json_body, null, 2));
 
-                client.post('/fhir/baseDstu2/Communication', json_body,function(err, req2, res2, obj) {
+                client.post('/baseDstu2/Communication', json_body,function(err, req2, res2, obj) {
 
                     if (err) {
                         res1.send(err.statusCode);
