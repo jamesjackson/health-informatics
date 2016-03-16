@@ -48,8 +48,8 @@ function attemptLogin()
     type: "GET",
     headers: {'Access-Control-Allow-Origin': '*'}
 }).done(function (data) {
-          alert(data.status);
-	  window.location.href = "index.html";
+          if( data.status == 'ok')
+	  	window.location.href = "index.html";
       });;
 }
 
