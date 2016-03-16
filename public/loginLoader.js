@@ -29,17 +29,13 @@ function attemptLogin()
     url: "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login",
     data: { 
         first_name: first_name, 
-        last_name: last_name 
+        last_name: last_name,
+	_sm_au_: 'iMVB7NSQ034GLL5P' 
     },
     cache: false,
     type: "GET",
-    headers: {'Access-Control-Allow-Origin': '*'},
-    error: function (xhr, ajaxOptions, thrownError) {
-        alert(xhr.status);
-        alert(thrownError);
-    }
+    headers: {'Access-Control-Allow-Origin': '*'}
 }).done(function (data) {
-	  alert("Got in");
           if( data.status == 'ok')
 	  	window.location.href = "index.html";
       });;
