@@ -302,15 +302,15 @@ function doctor_communication(req1, res1, next) {
 
 var server = restify.createServer();
 
-server.post('/:patient/condition', restify.bodyParser(), diagnose_condition);
+server.post('/api/:patient/condition', restify.bodyParser(), diagnose_condition);
 
-server.get('/:patient/login', restify.queryParser(), lookup_patient);
+server.get('/api/:patient/login', restify.queryParser(), lookup_patient);
 
-server.get('/practitioner', restify.queryParser(), lookup_practitioner);
+server.get('/api/practitioner', restify.queryParser(), lookup_practitioner);
 
-server.get('/symptomslist', symptoms_list);
+server.get('/api/symptomslist', symptoms_list);
 
-server.post('/:patient/communication/:practitioner', restify.bodyParser(), doctor_communication);
+server.post('/api/:patient/communication/:practitioner', restify.bodyParser(), doctor_communication);
 
 //server.get(/\/public\/?.*/, restify.serveStatic({
 //    directory: __dirname
