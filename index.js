@@ -317,7 +317,7 @@ server.post('/api/:patient/communication/:practitioner', restify.bodyParser(), d
 //}));
 
 server.get(/\/?.*/, restify.serveStatic({
-    default: 'index.html',
+    default: 'login.html',
     directory: './public'
 }));
 
