@@ -28,5 +28,12 @@ and open the template in the editor.
             <button onclick="goIndex()" type="submit" class="navigationButton pure-button pure-button-primary">About</button>
             <button onclick="goSendToDoctor()" type="submit" class="navigationButton pure-button pure-button-primary">Send to Doctor</button>
         </div>
+        
+        <!-- TAKE PHOTO - UNFINISHED -->
+        <br><br>
+        <input id="image" type="file" accept="image/*;capture=camera" onchange="showPhoto(this);">
+        <img id="imageViewer" class="imageViewer" />
+        
+        
     </body>
 </html>
