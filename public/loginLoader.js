@@ -38,7 +38,7 @@ function attemptLogin()
     //alert(first_name + " " + last_name + " " + patient_ID);
     
     $.ajax({
-    url: "http://myhealthapp.herokuapp.com/1671251/login",
+    url: "http://myhealthapp.herokuapp.com/api/5401/login",
     data: { 
         first_name: first_name, 
         last_name: last_name, 
