@@ -49,6 +49,7 @@ function attemptLogin()
     headers: {'Access-Control-Allow-Origin': '*'}
 }).done(function (data) {
           alert(data.status);
+	  window.location.href = "index.html";
       });;
 }
 
