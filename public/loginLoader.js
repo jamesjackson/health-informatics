@@ -17,18 +17,6 @@
     
 localStorage.setItem("currentSize","30");
 
-//$.ajax({
-//  type: "GET",
-//  url: "http://myhealthapp.herokuapp.com/1671251/login?first_name=FREDRICA&last_name=SMITH&_sm_au_=iMVBMrSljBLFkr37",
-//  cache: false,
-//  headers: {'Access-Control-Allow-Origin': '*'}
-//}).done(function (data) {
-//          //load the lines
-//          alert(data[0].status);
-//      });;
-
-
-
 function attemptLogin()
 {
     var first_name = document.getElementById("first-name").value;
@@ -36,7 +24,7 @@ function attemptLogin()
     var patient_ID = document.getElementById("patient-id").value;
     
     //alert(first_name + " " + last_name + " " + patient_ID);
-    
+    alert("http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login");
     $.ajax({
     url: "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login",
     data: { 
@@ -47,6 +35,7 @@ function attemptLogin()
     type: "GET",
     headers: {'Access-Control-Allow-Origin': '*'}
 }).done(function (data) {
+	  alert("Got in");
           if( data.status == 'ok')
 	  	window.location.href = "index.html";
       });;
