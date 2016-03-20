@@ -17,7 +17,7 @@ and open the template in the editor.
         <script src="bootstrap.min.js"></script>
         <script src="analyzeLoader.js"></script>
     </head>
-    <body>
+    <body onload="loadImageFromCache()">
         <div id="landingBar">
             <i id="hand-icon" class="fa fa-hand-paper-o"></i>
             <span id="landingText">Skin Diagnosis</span>
@@ -31,7 +31,7 @@ and open the template in the editor.
         
         <!-- TAKE PHOTO - UNFINISHED -->
         <br><br>
-        <input id="image" type="file" accept="image/*;capture=camera" onchange="showPhoto(this);">
+        <input id="image" type="file" accept="image/*;capture=camera" onchange="processImageFile(this);">
         <img id="imageViewer" class="imageViewer" />
         
         

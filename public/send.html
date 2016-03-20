@@ -17,7 +17,7 @@ and open the template in the editor.
         <script src="bootstrap.min.js"></script>
         <script src="sendLoader.js"></script>
     </head>
-    <body>
+    <body onload="loadImageFromCache()">
         <div id="landingBar">
             <i id="hand-icon" class="fa fa-hand-paper-o"></i>
             <span id="landingText">Skin Diagnosis</span>
@@ -28,5 +28,11 @@ and open the template in the editor.
             <button onclick="goIndex()" type="submit" class="navigationButton pure-button pure-button-primary">About</button>
             <button onclick="goAnalyze()" type="submit" class="navigationButton pure-button pure-button-primary">Analyze</button>
         </div>
+        
+        <!-- TAKE PHOTO - UNFINISHED -->
+        <br><br>
+        <input id="image" type="file" accept="image/*;capture=camera" onchange="processImageFile(this);">
+        <img id="imageViewer" class="imageViewer" />
+        
     </body>
 </html>
