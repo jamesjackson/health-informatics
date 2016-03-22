@@ -29,10 +29,49 @@ and open the template in the editor.
             <button onclick="goAnalyze()" type="submit" class="navigationButton pure-button pure-button-primary">Analyze</button>
         </div>
         
-        <!-- TAKE PHOTO - UNFINISHED -->
         <br><br>
         <input id="image" type="file" accept="image/*;capture=camera" onchange="processImageFile(this);">
         <img id="imageViewer" class="imageViewer" />
+        
+        <br><br><br>
+        How many days has it been since you noticed the rash?
+        
+        <select form="doctorform">
+        	<option value="0">0 (it started today)</option>
+        	<option value="1">1 (yesterday)</option>
+        	<option value="2">2 days ago</option>
+        	<option value="3-5">3-5 days ago</option>
+        	<option value="6-10">6-10 days ago</option>
+        	<option value="10+">10 or more days ago</option>
+        </select>
+        
+        <br><br>
+        <form id="doctorform">
+        	Any other information to add?<br>
+        	<input type="text" name="additionalInfo" style="height:100px;width:300px">
+        	<br><br><br>
+        	Please help us find your physician.<br><br>
+        	
+        	First Name &emsp;
+        	<input type="text" name="firstName"><br>
+        	Last Name &emsp;
+        	<input type="text" name="lastName"><br>
+        	Zip Code &emsp;
+        	<input type="text" name="zipCode"><br>
+	        
+	        <br>
+	        <input type="submit" value="Find Doctor">
+	        <!-- FORM SUBMIT BUTTON -->
+	        
+        </form>
+        
+        
+        
+        <br><br><br>
+        Please confirm that we have the correct physician by selecting yours.
+        
+        <!-- DISPLAY PHYSICIAN SUGGESTIONS -->
+        
         
     </body>
 </html>
