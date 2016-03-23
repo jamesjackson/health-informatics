@@ -111,13 +111,14 @@ and open the template in the editor.
 
 #subText
 {
-    float:left;
     color: black;
     font-family: monospace;
     font-size: 20px;
-    margin-left: auto;
+    width: 200px;
     margin-top: 10px;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 #doctorForm
@@ -127,6 +128,8 @@ and open the template in the editor.
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 20px;
+    border-radius: 15px;
     background-color: lightgrey;
 }
 
