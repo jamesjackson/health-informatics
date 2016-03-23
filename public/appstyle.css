@@ -121,14 +121,22 @@ and open the template in the editor.
 
 #doctorForm
 {
-    width:75%;
-    height:80%;
+    width: 75%;
+    height: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: lightgrey;
 }
 
 #physicianSelect
 {
     width:75%;
     height:20%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: lightgrey;
 }
 
 .navigationButton
