@@ -137,6 +137,8 @@ and open the template in the editor.
 {
     width:75%;
     height:20%;
+    border-radius: 15px;
+    margin-top: 15px;
     display: block;
     margin-left: auto;
     margin-right: auto;
