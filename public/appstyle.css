@@ -119,6 +119,18 @@ and open the template in the editor.
     margin-top: 10px;
 }
 
+#doctorForm
+{
+    width:75%;
+    height:80%;
+}
+
+#physicianSelect
+{
+    width:75%;
+    height:20%;
+}
+
 .navigationButton
 {
     float: right;
