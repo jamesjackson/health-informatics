@@ -112,11 +112,12 @@ and open the template in the editor.
 #subText
 {
     float:left;
-    color: white;
+    color: black;
     font-family: monospace;
     font-size: 20px;
-    margin-left: 73px;
+    margin-left: auto;
     margin-top: 10px;
+    margin-right:auto;
 }
 
 #doctorForm
