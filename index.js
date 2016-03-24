@@ -50,20 +50,40 @@ var collection = indico.Collection('my_collection200');
 var URLROOT = 'http://fhirtest.uhn.ca';
 //var URLROOT = 'http://52.72.172.54:8080';
 
+
+//
+//var training_data = [
+//    {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":false, "rash_fluid":false, "diagnosis":"measles" },
+//    {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":false, "rash_fluid":true, "diagnosis":"chicken_pox" },
+//    {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":true, "rash_fluid":true, "diagnosis":"chicken_pox" },
+//    {"age":"child", "fever":false, "sore_throat":false, "rash_painful":true, "rash_crusty":false, "rash_fluid":true, "diagnosis":"shingles" },
+//    {"age":"adult", "fever":false, "sore_throat":false, "rash_painful":true, "rash_crusty":false, "rash_fluid":true, "diagnosis":"shingles" },
+//    {"age":"child", "fever":false, "sore_throat":false, "rash_painful":true, "rash_crusty":true, "rash_fluid":true, "diagnosis":"shingles" },
+//    {"age":"adult", "fever":false, "sore_throat":false, "rash_painful":true, "rash_crusty":true, "rash_fluid":true, "diagnosis":"shingles" },
+//    {"age":"child", "fever":false, "sore_throat":false, "rash_painful":false, "rash_crusty":false, "rash_fluid":false, "diagnosis":"ringworm" }
+//];
+
+//can ignore the attribs that don't matter i.e. any value works !!!
+
+
 var training_data = [
-    {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":false, "rash_fluid":false, "diagnosis":"measles" },
-    {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":false, "rash_fluid":true, "diagnosis":"chicken_pox" },
-    {"age":"child", "fever":true, "sore_throat":true, "rash_painful":false, "rash_crusty":true, "rash_fluid":true, "diagnosis":"chicken_pox" },
-    {"age":"child", "fever":false, "sore_throat":false, "rash_painful":true, "rash_crusty":false, "rash_fluid":true, "diagnosis":"shingles" },
-    {"age":"adult", "fever":false, "sore_throat":false, "rash_painful":true, "rash_crusty":false, "rash_fluid":true, "diagnosis":"shingles" },
-    {"age":"child", "fever":false, "sore_throat":false, "rash_painful":true, "rash_crusty":true, "rash_fluid":true, "diagnosis":"shingles" },
-    {"age":"adult", "fever":false, "sore_throat":false, "rash_painful":true, "rash_crusty":true, "rash_fluid":true, "diagnosis":"shingles" },
-    {"age":"child", "fever":false, "sore_throat":false, "rash_painful":false, "rash_crusty":false, "rash_fluid":false, "diagnosis":"ringworm" }
+    {"age":"child", "fever":"low", "fever_timing":"before_rash", "rash_location_upper":true, "rash_location_lower":false, "rash_location_oneside":false, "rash_itchy":true, "rash_painful":false, "exposure":true, "diagnosis":"chicken_pox" },
+    {"age":"child", "fever":"low", "fever_timing":"with_rash", "rash_location_upper":true, "rash_location_lower":false, "rash_location_oneside":false, "rash_itchy":true, "rash_painful":false, "exposure":true, "diagnosis":"chicken_pox" },
+    {"age":"child", "fever":"low", "fever_timing":"after_rash", "rash_location_upper":true, "rash_location_lower":false, "rash_location_oneside":false, "rash_itchy":true, "rash_painful":false, "exposure":true, "diagnosis":"chicken_pox" },
+    {"age":"child", "fever":"high", "fever_timing":"before_rash", "rash_location_upper":true, "rash_location_lower":true, "rash_location_oneside":false, "rash_itchy":false, "rash_painful":false, "exposure":true, "diagnosis":"measles" },
+    {"age":"adult", "fever":"none", "fever_timing":"n/a", "rash_location_upper":true, "rash_location_lower":true, "rash_location_oneside":true, "rash_itchy":false, "rash_painful":true, "exposure":false, "diagnosis":"shingles" },
+    {"age":"adult", "fever":"none", "fever_timing":"n/a", "rash_location_upper":true, "rash_location_lower":false, "rash_location_oneside":true, "rash_itchy":false, "rash_painful":true, "exposure":false, "diagnosis":"shingles" },
+    {"age":"adult", "fever":"none", "fever_timing":"n/a", "rash_location_upper":false, "rash_location_lower":true, "rash_location_oneside":true, "rash_itchy":false, "rash_painful":true, "exposure":false, "diagnosis":"shingles" },
+    {"age":"adult", "fever":"low", "fever_timing":"before_rash", "rash_location_upper":true, "rash_location_lower":true, "rash_location_oneside":true, "rash_itchy":false, "rash_painful":true, "exposure":false, "diagnosis":"shingles" },
+    {"age":"adult", "fever":"none", "fever_timing":"n/a", "rash_location_upper":false, "rash_location_lower":false, "rash_location_oneside":false, "rash_itchy":true, "rash_painful":false, "exposure":false, "diagnosis":"ringworm" },
 ];
 
-
 var class_name = "diagnosis";
-var features = ["age", "fever", "sore_throat", "rash_painful", "rash_crusty", "rash_fluid"];
+
+//var features = ["age", "fever", "sore_throat", "rash_painful", "rash_crusty", "rash_fluid"];
+
+var features = ["age", "fever", "fever_timing", "rash_location_upper", "rash_location_lower", "rash_location_oneside", "rash_itchy", "rash_painful", "exposure"];
+
 
 // Train the decision tree at startup
 var dt = new DecisionTree(training_data, class_name, features);
@@ -184,15 +204,31 @@ function lookup_practitioner(req1, res1, next) {
 };
 
 
+
+
 function symptoms_list(req, res, next) {
+
+    //var json_body =     {
+    //    "symptoms": [
+    //        {"name": "fever", "type": "boolean", "text" : "Have you experienced a fever ?"},
+    //        {"name": "sore_throat", "type": "boolean", "text" : "Have you experienced a sore throat ?"},
+    //        {"name": "rash_painful", "type": "boolean", "text" : "Is the rash painful ?"},
+    //        {"name": "rash_crusty", "type": "boolean", "text" : "Is the rash crusty ?"},
+    //        {"name": "rash_fluid", "type": "boolean", "text" : "Is the rash fluid filled ?"}
+    //    ]
+    //}
 
     var json_body =     {
         "symptoms": [
-            {"name": "fever", "type": "boolean", "text" : "Have you experienced a fever ?"},
-            {"name": "sore_throat", "type": "boolean", "text" : "Have you experienced a sore throat ?"},
-            {"name": "rash_painful", "type": "boolean", "text" : "Is the rash painful ?"},
-            {"name": "rash_crusty", "type": "boolean", "text" : "Is the rash crusty ?"},
-            {"name": "rash_fluid", "type": "boolean", "text" : "Is the rash fluid filled ?"}
+            {"name": "age", "type": "factor:child,adult", "text" : "Is this affecting a child or an adult ?"},
+            {"name": "fever", "type": "factor:none,low,high", "text" : "Have they experienced a fever ?"},
+            {"name": "fever_timing", "type": "factor:n/a,before_rash,with_rash,after_rash", "text" : "When was the fever experienced ?"},
+            {"name": "rash_location_upper", "type": "boolean", "text" : "Is the rash spread across the upper body ?"},
+            {"name": "rash_location_lower", "type": "boolean", "text" : "Is the rash spread across the lower body ?"},
+            {"name": "rash_location_oneside", "type": "boolean", "text" : "Is the rash spread on only one side of the body ?"},
+            {"name": "rash_itchy", "type": "boolean", "text" : "Is the rash very itchy ?"},
+            {"name": "rash_painful", "type": "boolean", "text" : "Is the rash very painful ?"},
+            {"name": "exposure", "type": "boolean", "text" : "Has there been a clear history of exposure ?"}
         ]
     }
 
