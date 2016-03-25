@@ -12,7 +12,7 @@ STEP 1: LOGIN WITH PATIENT ID, FIRST NAME, LAST NAME (SERVER WILL LOOKUP ID AND 
 =======================================================================================================
 
 curl -v 'http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart'
-*   Trying 23.21.227.249...
+*   Trying 23.23.169.130...
 * Connected to myhealthapp.herokuapp.com (127.0.0.1) port 80 (#0)
 > GET /api/5401/login?first_name=Sebastian&last_name=Bernhart HTTP/1.1
 > Host: myhealthapp.herokuapp.com
@@ -24,7 +24,7 @@ curl -v 'http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&la
 < Connection: keep-alive
 < Content-Type: application/json
 < Content-Length: 15
-< Date: Wed, 16 Mar 2016 01:47:22 GMT
+< Date: Fri, 25 Mar 2016 05:07:30 GMT
 < Via: 1.1 vegur
 <
 * Connection #0 to host myhealthapp.herokuapp.com left intact
@@ -46,46 +46,46 @@ curl -v 'http://myhealthapp.herokuapp.com/api/symptomslist'
 < Server: Cowboy
 < Connection: keep-alive
 < Content-Type: application/json
-< Content-Length: 391
-< Date: Wed, 16 Mar 2016 01:47:50 GMT
+< Content-Length: 863
+< Date: Fri, 25 Mar 2016 05:08:10 GMT
 < Via: 1.1 vegur
 <
 * Connection #0 to host myhealthapp.herokuapp.com left intact
-{"symptoms":[{"name":"fever","type":"boolean","text":"Have you experienced a fever ?"},{"name":"sore_throat","type":"boolean","text":"Have you experienced a sore throat ?"},{"name":"rash_painful","type":"boolean","text":"Is the rash painful ?"},{"name":"rash_crusty","type":"boolean","text":"Is the rash crusty ?"},{"name":"rash_fluid","type":"boolean","text":"Is the rash fluid filled ?"}]}
+{"symptoms":[{"name":"age","type":"factor:child,adult","text":"Is this affecting a child or an adult ?"},{"name":"fever","type":"factor:none,low,high","text":"Have they experienced a fever ?"},{"name":"fever_timing","type":"factor:n/a,before_rash,with_rash,after_rash","text":"When was the fever experienced ?"},{"name":"rash_location_upper","type":"boolean","text":"Is the rash spread across the upper body ?"},{"name":"rash_location_lower","type":"boolean","text":"Is the rash spread across the lower body ?"},{"name":"rash_location_oneside","type":"boolean","text":"Is the rash spread on only one side of the body ?"},{"name":"rash_itchy","type":"boolean","text":"Is the rash very itchy ?"},{"name":"rash_painful","type":"boolean","text":"Is the rash very painful ?"},{"name":"exposure","type":"boolean","text":"Has there been a clear history of exposure ?"}]}
 
 
 STEP 3: PERFORM DIAGNOSIS (SUBMIT ANSWERS AND PHOTO)
 ====================================================
 
 curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/api/5401/condition'
-*   Trying 23.23.190.34...
+*   Trying 54.225.105.233...
 * Connected to myhealthapp.herokuapp.com (127.0.0.1) port 80 (#0)
 > POST /api/5401/condition HTTP/1.1
 > Host: myhealthapp.herokuapp.com
 > User-Agent: curl/7.43.0
 > Accept: */*
-> Content-Length: 38990
+> Content-Length: 39091
 > Expect: 100-continue
-> Content-Type: multipart/form-data; boundary=------------------------c7826f04da3d6770
+> Content-Type: multipart/form-data; boundary=------------------------6058734b2db48bb3
 >
 < HTTP/1.1 100 Continue
 < HTTP/1.1 201 Created
 < Server: Cowboy
 < Connection: keep-alive
 < Content-Type: application/json
-< Content-Length: 174
-< Date: Wed, 16 Mar 2016 01:48:28 GMT
+< Content-Length: 175
+< Date: Fri, 25 Mar 2016 05:09:12 GMT
 < Via: 1.1 vegur
 <
 * Connection #0 to host myhealthapp.herokuapp.com left intact
-{"decision_tree_pred":"measles","cv_pred":{"measles":0.02053357769080464,"ringworm":0.9791421869267338,"chicken_pox":0.000018669283289237978,"shingles":0.000305566099172444}}
+{"decision_tree_pred":"shingles","cv_pred":{"measles":0.02053357769080464,"ringworm":0.9791421869267338,"chicken_pox":0.000018669283289237978,"shingles":0.000305566099172444}}
 
 
 STEP 4: LOOKUP PRACTITIONER BY FIRST NAME, LAST NAME
 ====================================================
 
 curl -v 'http://myhealthapp.herokuapp.com/api/practitioner?first_name=Hood&last_name=Robin'
-*   Trying 54.83.197.202...
+*   Trying 204.236.218.45...
 * Connected to myhealthapp.herokuapp.com (127.0.0.1) port 80 (#0)
 > GET /api/practitioner?first_name=Hood&last_name=Robin HTTP/1.1
 > Host: myhealthapp.herokuapp.com
@@ -97,7 +97,7 @@ curl -v 'http://myhealthapp.herokuapp.com/api/practitioner?first_name=Hood&last_
 < Connection: keep-alive
 < Content-Type: application/json
 < Content-Length: 53
-< Date: Wed, 16 Mar 2016 01:49:08 GMT
+< Date: Fri, 25 Mar 2016 05:09:39 GMT
 < Via: 1.1 vegur
 <
 * Connection #0 to host myhealthapp.herokuapp.com left intact
@@ -108,16 +108,15 @@ STEP 5: SEND PHOTO, ANSWERS, AND DIAGNOSIS TO PRACTITIONER
 ==========================================================
 
 curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F 'diagnosis=@diagnosis.json;type=application/json' -F 'photo=@test.jpg;type=image/jpeg"' 'http://myhealthapp.herokuapp.com/api/5401/communication/5510'
-
-*   Trying 54.197.245.254...
+*   Trying 23.23.231.101...
 * Connected to myhealthapp.herokuapp.com (127.0.0.1) port 80 (#0)
 > POST /api/5401/communication/5510 HTTP/1.1
 > Host: myhealthapp.herokuapp.com
 > User-Agent: curl/7.43.0
 > Accept: */*
-> Content-Length: 39276
+> Content-Length: 39377
 > Expect: 100-continue
-> Content-Type: multipart/form-data; boundary=------------------------e6aba31967ca4791
+> Content-Type: multipart/form-data; boundary=------------------------c669ac5cf1055142
 >
 < HTTP/1.1 100 Continue
 < HTTP/1.1 201 Created
@@ -125,7 +124,7 @@ curl -v -s -X POST -H '' -F 'symptoms=@symptoms.json;type=application/json' -F '
 < Connection: keep-alive
 < Content-Type: application/json
 < Content-Length: 20
-< Date: Wed, 16 Mar 2016 01:49:57 GMT
+< Date: Fri, 25 Mar 2016 05:10:18 GMT
 < Via: 1.1 vegur
 <
 * Connection #0 to host myhealthapp.herokuapp.com left intact
