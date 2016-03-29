@@ -35,7 +35,7 @@ function attemptLogin()
     headers: {'Access-Control-Allow-Origin': '*'}
 }).done(function (data) {
           if( data.status == 'ok')
-	  	window.location.href = "index.html";
+	  	window.location.href = "http://myhealthapp.herokuapp.com/index.html";
       });;
 }
 
