@@ -15,7 +15,15 @@
                         "http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart",
 
                         function(data) {
-                            $('#stage').html(data.toString());
+                            var items = [];
+                            $.each( data, function( key, val ) {
+                                items.push( "<li id='" + key + "'>" + val + "</li>" );
+                            });
+
+                            $( "<ul/>", {
+                                "class": "my-new-list",
+                                html: items.join( "" )
+                            }).appendTo( "body" );
                         }
 
 
@@ -26,8 +34,6 @@
     </script>
 </head>
 <body>
-
-<p>Click on the button to load result.html file −</p>
 
       <span id = "stage" style = "background-color:#cc0;">
          STAGE
