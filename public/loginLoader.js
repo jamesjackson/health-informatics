@@ -34,8 +34,9 @@ function attemptLogin()
     type: "GET",
     headers: {'Access-Control-Allow-Origin': '*'}
 }).done(function (data) {
+	alert("WTF HOMES");
           if( data.status == 'ok')
-	  	window.location.href = "index.html";
+			window.location.href = "index.html";
       });;
 }
 
