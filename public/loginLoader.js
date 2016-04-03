@@ -36,6 +36,7 @@ function attemptLogin()
 	error: function (xhr, ajaxOptions, thrownError) {
         alert(xhr.status);
         alert(xhr.responseText);
+		alert("WTF");
       }
 }).done(function (data) {
 	alert("WTF HOMES");
