@@ -28,14 +28,13 @@ function attemptLogin()
     url: "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login",
     data: { 
         first_name: first_name, 
-        last_name: last_name,
-		_sm_au_: ""
+        last_name: last_name
     },
     cache: false,
     type: "GET",
     headers: {'Access-Control-Allow-Origin': '*'},
-	error: function (xhr, ajaxOptions, thrownError) {
-		alert(thrownError);
+	error: function (xhr, textStatus, thrownError) {
+		alert(textStatus);
         alert(xhr.status);
         alert(xhr.responseText);
       }
