@@ -32,7 +32,11 @@ function attemptLogin()
     },
     cache: false,
     type: "GET",
-    headers: {'Access-Control-Allow-Origin': '*'}
+    headers: {'Access-Control-Allow-Origin': '*'},
+	error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
+      }
 }).done(function (data) {
 	alert("WTF HOMES");
           if( data.status == 'ok')
