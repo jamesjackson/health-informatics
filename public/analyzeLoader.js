@@ -21,7 +21,7 @@ function processImageFile(input)
 	{
 		var reader = new FileReader();
 		reader.onload = function(image) {
-			$('#imageViewer').attr('src', image.target.result).width(640).height(480);
+			$('#imageViewer').attr('src', image.target.result).width(240).height(160);
 			localStorage.setItem("image", image.target.result);
 		}
 		reader.readAsDataURL(input.files[0]);
@@ -31,5 +31,5 @@ function processImageFile(input)
 function loadImageFromCache(input)
 {
 	var image = localStorage.getItem("image");
-	document.getElementById("imageViewer").src = image; 
+	$('#imageViewer').attr('src', image).width(240).height(160); 
 }
