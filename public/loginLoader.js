@@ -34,9 +34,9 @@ function attemptLogin()
     type: "GET",
     headers: {'Access-Control-Allow-Origin': '*'},
 	error: function (xhr, ajaxOptions, thrownError) {
+		alert("WTF");
         alert(xhr.status);
         alert(xhr.responseText);
-		alert("WTF");
       }
 }).done(function (data) {
 	alert("WTF HOMES");
