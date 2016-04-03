@@ -34,7 +34,7 @@ function attemptLogin()
     type: "GET",
     headers: {'Access-Control-Allow-Origin': '*'},
 	error: function (xhr, ajaxOptions, thrownError) {
-		alert("WTF");
+		alert(thrownError);
         alert(xhr.status);
         alert(xhr.responseText);
       }
