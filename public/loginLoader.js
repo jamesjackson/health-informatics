@@ -30,9 +30,9 @@ function attemptLogin()
 			url: urlString,
 			dataType:'json',
 			async: false,
-			success: function(){
+			success: function(data){
 				alert("success");
-				window.setTimeout(function(){ window.location = "index.html"; },1000);
+				setTimeout(function(){ window.location.href = "index.html";alert("bitches and hoes"); },1000);
 			},
 			error: function(){
 				alert("unable to log in to user account");
