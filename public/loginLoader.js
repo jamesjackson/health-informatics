@@ -27,7 +27,7 @@ function attemptLogin()
 		urlString = "http://myhealthapp.herokuapp.com/api/" +patient_ID+"/login?first_name=" + first_name +"&last_name=" +last_name;
 		//alert(urlString);
 		$.ajax({
-			url: myUrl,
+			url: urlString,
 			dataType: 'json',
 			async: true
 			}).done(function(data) {
