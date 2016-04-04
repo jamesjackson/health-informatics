@@ -1,55 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type = "text/javascript"
+            src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-    <head>
-        <meta charset="utf-8">
-        <title>Login</title>
-        
-        <script src="jquery.js"></script>
-        <link href="appstyle.css" rel="stylesheet" type="text/css">
-        <link href="font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="bootstrap.min.css">
-        <link rel="stylesheet" href="pure-min.css">
-        <script src="bootstrap.min.js"></script>
-        <script src="loginLoader.js"></script>
-  
-    </head>
-    <body>
-        <div id="landingBar">
-            <i id="hand-icon" class="fa fa-hand-paper-o"></i>
-            <span  id="landingText">Skin Diagnosis</span>
-        </div>
+    <script type = "text/javascript" language = "javascript">
+        $(document).ready(function() {
 
-                <form id="login-form" class="pure-form">
-                    <fieldset>
+            $("#driver").click(function(event){
+		$.getJSON(
+            		"http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart",
+           		 function(data) {
+             		        alert("howdy");
+                		alert(data.status);
+            		}
+    		);
+            });
 
-                            <p id="loginTitle" class="fa fa-lock">  Secure Login</p>
-                            <div style="margin-top: 8px;margin-left: 13px;" class="pure-u-1 pure-u-md-1-3">
-                                <label for="first-name">First Name</label>
-                                <input style="color:black;" id="first-name" class="pure-u-23-24" type="text">
-                            </div>
+        });
+    </script>
+</head>
+<body>
 
-                            <div style="margin-top: 8px;margin-left: 13px;" class="pure-u-1 pure-u-md-1-3">
-                                <label for="last-name">Last Name</label>
-                                <input style="color:black;" id="last-name" class="pure-u-23-24" type="text">
-                            </div>
+      <span id = "stage" style = "background-color:#cc0;">
 
-                            <div style="margin-top: 8px;margin-left: 13px;" class="pure-u-1 pure-u-md-1-3">
-                                <label for="password">Patient ID</label>
-                                <input style="color:black;" id="patient-id" class="pure-u-23-24" type="text" required>
-                            </div>
+      </span>
 
-                        <button style="width:96%;margin-top: 18px;margin-left: 13px;" onclick="attemptLogin()" type="submit" class="pure-button pure-button-primary">Login</button>
-                    </fieldset>
-                </form>
+<div><input type = "button" id = "driver"
+            value = "Load Data" /></div>
 
-        <button id="collapseFooter" type="button" class="btn btn-info fa fa-angle-up" onclick="changeSize()" data-toggle="collapse" data-target="#collapseContent"> This is a secure application</button>
-        <div id="collapseContent" class="collapse">
-          The purpose of this application is to provide a resource outside of a doctor visit to asses a skin
-          condition.  Communications with your physician will only be made if you decide to pursue them.
-          Any diagnosis provided by the application is not approved by a licensed medical professional.
-        </div>
-
-    </body>
-
+</body>
 </html>
