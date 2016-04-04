@@ -28,11 +28,17 @@ function attemptLogin()
 		//alert(urlString);
 		$.ajax({
 			url: urlString,
-			async: false
-			}).done(function(data) {
-					window.location.href = "index.html";
+			dataType:'json',
+			async: false,
+			success: function(){
+				window.location.href = "index.html";
+			},
+			error: function(){
+				alert("unable to log in to user account");
+			},
+			complete: function(){
+			}
 			});
-	});
 
 }
 
