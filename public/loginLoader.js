@@ -21,19 +21,20 @@ function attemptLogin()
 {   
   $(document).ready(function() {
   
-	var first_name = document.getElementById("first-name").value;
-	var last_name = document.getElementById("last-name").value;
-	var patient_ID = document.getElementById("patient-id").value;
-	urlString = "http://myhealthapp.herokuapp.com/api/" +patient_ID+"/login?first_name=" + first_name +"&last_name=" +last_name;
-	//alert(urlString);
-	$.getJSON(
-		urlString,
-		function(data) {
-			window.location.href = "index.html";
-		}
-	);
-	localStorage.setItem("userLoginID",patient_ID);
-});
+		var first_name = document.getElementById("first-name").value;
+		var last_name = document.getElementById("last-name").value;
+		var patient_ID = document.getElementById("patient-id").value;
+		urlString = "http://myhealthapp.herokuapp.com/api/" +patient_ID+"/login?first_name=" + first_name +"&last_name=" +last_name;
+		//alert(urlString);
+		$.ajax({
+			url: myUrl,
+			dataType: 'json',
+			async: true
+			}).done(function(data) {
+					window.location.href = "index.html";
+			});
+		alert("donesky");
+	});
 
 }
 
