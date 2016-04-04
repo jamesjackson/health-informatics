@@ -14,9 +14,10 @@
         <script src="bootstrap.min.js"></script>
         <!--<script src="loginLoader.js"></script>-->
         <script type = "text/javascript" language = "javascript">
+			urlStrin = "http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart";
 			$(document).ready(function() {
 				$.getJSON(
-						"http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart",
+						urlString,
 						function(data) {
 							alert("howdy");
 							alert(data.status);
