@@ -31,7 +31,7 @@ function attemptLogin()
 		dataType: 'json',
 		async: false,
 		function(data) {
-			//alert("howdy 2");
+			alert("howdy 2");
 			if(data.status === "ok")
 				window.location.href = "index.html";
 			else
