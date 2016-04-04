@@ -83,7 +83,10 @@ jQuery.ajax = (function(_ajax){
 
 function attemptLogin()
 {   
-    alert("new trial");
+    alert("new new trial");
+	var first_name = document.getElementById("first-name").value;
+    var last_name = document.getElementById("last-name").value;
+    var patient_ID = document.getElementById("patient-id").value;
     //alert(first_name + " " + last_name + " " + patient_ID);
     $.ajax({
     url: "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login",
