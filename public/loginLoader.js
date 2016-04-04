@@ -31,7 +31,7 @@ function attemptLogin()
     //},
     cache: false,
     type: "GET",
-    headers: {'Access-Control-Allow-Origin': '*'},
+    //headers: {'Access-Control-Allow-Origin': '*'},
 	error: function (xhr, textStatus, thrownError) {
 		alert(textStatus);
         alert(xhr.status);
