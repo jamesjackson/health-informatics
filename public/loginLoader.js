@@ -30,12 +30,10 @@ function attemptLogin()
 			async: false,
 			success: function(data){
 				alert("success" + data.status);
-				setTimeout(function(){ window.location.href = "index.html";alert("bitches and hoes"); },1000);
+				window.location.href = "index.html";
 			},
 			error: function(){
 				alert("unable to log in to user account");
-			},
-			complete: function(){
 			}
 		});
 }
