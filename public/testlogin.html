@@ -10,24 +10,13 @@
         $(document).ready(function() {
 
             $("#driver").click(function(event){
-                $.getJSON(
-
-                        "http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart",
-
-                        function(data) {
-                            var items = [];
-                            $.each( data, function( key, val ) {
-                                items.push( "<li id='" + key + "'>" + val + "</li>" );
-                            });
-
-                            $( "<ul/>", {
-                                "class": "my-new-list",
-                                html: items.join( "" )
-                            }).appendTo( "body" );
-                        }
-
-
-                );
+		$.getJSON(
+            		"http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart",
+           		 function(data) {
+             		        alert("howdy");
+                		alert(data.status);
+            		}
+    		);
             });
 
         });
