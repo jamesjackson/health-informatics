@@ -19,18 +19,29 @@ localStorage.setItem("currentSize","30");
 
 function attemptLogin()
 {   
-    $(document).ready(function() {
-    var first_name = document.getElementById("first-name").value;
-    var last_name = document.getElementById("last-name").value;
-    var patient_ID = document.getElementById("patient-id").value;
-    alert("WTF MAN");
+  $(document).ready(function() {
+
     $.getJSON(
-            "http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart",
-            function(data) {
-                alert("howdy");
-                alert(data.status);
-            }
-    );
+                "http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart",
+               function(data) {
+                        alert("howdy");
+                    alert(data.status);
+                }
+        );
+
+        });
+    // $(document).ready(function() {
+    // var first_name = document.getElementById("first-name").value;
+    // var last_name = document.getElementById("last-name").value;
+    // var patient_ID = document.getElementById("patient-id").value;
+    // alert("WTF MAN");
+    // $.getJSON(
+    //         "http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart",
+    //         function(data) {
+    //             alert("howdy");
+    //             alert(data.status);
+    //         }
+    // );
 //     $.ajax({
 //     url: "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login",
 //     data: { 
