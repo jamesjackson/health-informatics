@@ -29,7 +29,7 @@ function attemptLogin()
 	$.ajax({
 		url: urlString,
 		dataType: 'json',
-		async: true,
+		async: false,
 		function(data) {
 			//alert("howdy 2");
 			if(data.status === "ok")
