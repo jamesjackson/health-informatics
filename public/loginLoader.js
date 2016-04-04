@@ -25,19 +25,13 @@ function attemptLogin()
 	var last_name = document.getElementById("last-name").value;
 	var patient_ID = document.getElementById("patient-id").value;
 	urlString = "http://myhealthapp.herokuapp.com/api/" +patient_ID+"/login?first_name=" + first_name +"&last_name=" +last_name;
-	//alert(urlString);
-	$.ajax({
-		url: urlString,
-		dataType: 'json',
-		async: false,
+	alert(urlString);
+	$.getJSON(
+		urlString,
 		function(data) {
-			alert("howdy 2");
-			if(data.status === "ok")
-				window.location.href = "index.html";
-			else
-				alert("could not login");
+			window.location.href = "index.html";
 		}
-	});
+	);
 	alert("out");
 });
 
