@@ -24,7 +24,7 @@ function attemptLogin()
     var patient_ID = document.getElementById("patient-id").value;
     alert("http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login?first_name=" + first_name + "&last_name=" + last_name);
     $.ajax({
-    url: "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login?first_name=" + first_name + "&last_name=" + last_name;
+    url: "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login?first_name=" + first_name + "&last_name=" + last_name,
     //data: { 
     //    first_name: first_name, 
     //    last_name: last_name
