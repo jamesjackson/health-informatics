@@ -75,7 +75,7 @@ var training_data = [
     {"age":"adult", "fever":"none", "fever_timing":"n/a", "rash_location_upper":true, "rash_location_lower":false, "rash_location_oneside":true, "rash_itchy":false, "rash_painful":true, "exposure":false, "diagnosis":"shingles" },
     {"age":"adult", "fever":"none", "fever_timing":"n/a", "rash_location_upper":false, "rash_location_lower":true, "rash_location_oneside":true, "rash_itchy":false, "rash_painful":true, "exposure":false, "diagnosis":"shingles" },
     {"age":"adult", "fever":"low", "fever_timing":"before_rash", "rash_location_upper":true, "rash_location_lower":true, "rash_location_oneside":true, "rash_itchy":false, "rash_painful":true, "exposure":false, "diagnosis":"shingles" },
-    {"age":"adult", "fever":"none", "fever_timing":"n/a", "rash_location_upper":false, "rash_location_lower":false, "rash_location_oneside":false, "rash_itchy":true, "rash_painful":false, "exposure":false, "diagnosis":"ringworm" },
+    {"age":"adult", "fever":"none", "fever_timing":"n/a", "rash_location_upper":false, "rash_location_lower":false, "rash_location_oneside":false, "rash_itchy":true, "rash_painful":false, "exposure":false, "diagnosis":"ringworm" }
 ];
 
 var class_name = "diagnosis";

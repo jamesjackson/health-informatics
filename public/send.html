@@ -55,17 +55,21 @@ and open the template in the editor.
             	Please help us find your physician.<br><br>
             	
             	First Name &emsp;
-            	<input style="margin-bottom: 8px" type="text" name="firstName"><br>
+            	<input id="firstName" style="margin-bottom: 8px" type="text" name="firstName"><br>
             	Last Name &emsp;
-            	<input style="margin-bottom: 8px" type="text" name="lastName"><br>
+            	<input id="lastName" style="margin-bottom: 8px" type="text" name="lastName"><br>
+            	
+            	<!-- Are we keeping this? 
             	Zip Code &emsp;
             	<input style="margin-left: 10px;"type="text" name="zipCode"><br>
+            	 -->
     	        
     	        <br>
-    	        <input type="submit" value="Find Doctor">
-    	        <!-- FORM SUBMIT BUTTON -->
+    	        <!-- IMPLEMENT FORM TO GET PHYSICIAN INFO, SEND TO SERVER, AND SHOW PHYSICIANS BELOW -->
     	        
             </form>
+            
+            <button onclick="findPhysician()">Find Doctor</button>
         </div>
         
         <div id="physicianSelect">
@@ -73,7 +77,10 @@ and open the template in the editor.
             Please confirm that we have the correct physician by selecting yours.
             
             <!-- DISPLAY PHYSICIAN SUGGESTIONS -->
+            
         </div>
+        
+        <!-- IF PHYSICIAN SELECTED, REVEAL BUTTON TO SEND INFORMATION TO SELECTED PHYSICIAN -->
         
         
     </body>

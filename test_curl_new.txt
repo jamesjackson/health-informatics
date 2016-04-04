@@ -2,11 +2,11 @@
 RESOURCES
 =========
 
-/<patientID>/login?first_name=<first_name>&last_name=<last_name> (GET)
-/symptomslist (GET)
-/<patientID>/condition (multipart POST)
-/practitioner?first_name=<first_name>&last_name=<last_name> (GET)
-/<patientID>/communication/<practitionerID> (multipart POST)
+/api/<patientID>/login?first_name=<first_name>&last_name=<last_name> (GET)
+/api/symptomslist (GET)
+/api/<patientID>/condition (multipart POST)
+/api/practitioner?first_name=<first_name>&last_name=<last_name> (GET)
+/api/<patientID>/communication/<practitionerID> (multipart POST)
 
 STEP 1: LOGIN WITH PATIENT ID, FIRST NAME, LAST NAME (SERVER WILL LOOKUP ID AND CHECK THAT NAMES MATCH)
 =======================================================================================================
