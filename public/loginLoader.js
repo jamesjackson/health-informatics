@@ -32,7 +32,7 @@ function attemptLogin()
 			window.location.href = "index.html";
 		}
 	);
-	alert("out");
+	localStorage.setItem("userLoginID",patient_ID);
 });
 
 }
