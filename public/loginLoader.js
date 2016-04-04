@@ -31,12 +31,14 @@ function attemptLogin()
 			dataType:'json',
 			async: false,
 			success: function(){
+				alert("success");
 				window.location.href = "index.html";
 			},
 			error: function(){
 				alert("unable to log in to user account");
 			},
 			complete: function(){
+				alert("success");
 				window.location.href = "index.html";
 			}
 		});
