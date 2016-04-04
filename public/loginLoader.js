@@ -18,9 +18,7 @@ else {
 localStorage.setItem("currentSize","30");
 
 function attemptLogin()
-{   
-  $(document).ready(function() {
-  
+{    
 		var first_name = document.getElementById("first-name").value;
 		var last_name = document.getElementById("last-name").value;
 		var patient_ID = document.getElementById("patient-id").value;
@@ -40,8 +38,6 @@ function attemptLogin()
 			complete: function(){
 			}
 		});
-
-	});
 }
 
 function changeSize() 
