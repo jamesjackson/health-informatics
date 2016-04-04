@@ -338,6 +338,8 @@ function doctor_communication(req1, res1, next) {
 
 var server = restify.createServer();
 
+server.use(restify.CORS());
+
 server.post('/api/:patient/condition', restify.bodyParser(), diagnose_condition);
 
 server.get('/api/:patient/login', restify.queryParser(), lookup_patient);
