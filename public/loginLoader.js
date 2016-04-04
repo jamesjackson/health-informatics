@@ -19,39 +19,36 @@ localStorage.setItem("currentSize","30");
 
 function attemptLogin()
 {   
-  $(document).ready(function() {
-
-    // $(document).ready(function() {
-    // var first_name = document.getElementById("first-name").value;
-    // var last_name = document.getElementById("last-name").value;
-    // var patient_ID = document.getElementById("patient-id").value;
-    // alert("WTF MAN");
-    // $.getJSON(
-    //         "http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart",
-    //         function(data) {
-    //             alert("howdy");
-    //             alert(data.status);
-    //         }
-    // );
-     $.ajax({
-		 url: "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login",
-		 data: { 
-			 first_name: first_name, 
-			 last_name: last_name
-		 },
-		 cache: false,
-		 type: "GET",
-		 headers: {'Access-Control-Allow-Origin': '*'},
-		error: function (xhr, textStatus, thrownError) {
-			alert(textStatus);
-			 alert(xhr.status);
-			 alert(xhr.responseText);
-		   }
-	}).done(function (data) 
-	{
-           if( data.status == 'ok')
-				window.location.href = "index.html";
-    });
+     $(document).ready(function() {
+		 var first_name = document.getElementById("first-name").value;
+		 var last_name = document.getElementById("last-name").value;
+		 var patient_ID = document.getElementById("patient-id").value;
+		 $.getJSON(
+				 "http://myhealthapp.herokuapp.com/api/" +patient_ID+"/login?first_name=" + first_name +"&last_name=" +last_name,
+				 function(data) {
+					 alert("howdy");
+					 alert(data.status);
+					 window.location.href = "index.html";
+				 }
+		 );
+//     $.ajax({
+//     url: "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login",
+//     data: { 
+//         first_name: first_name, 
+//         last_name: last_name
+//     },
+//     cache: false,
+//     type: "GET",
+//     headers: {'Access-Control-Allow-Origin': '*'},
+// 	error: function (xhr, textStatus, thrownError) {
+// 		alert(textStatus);
+//         alert(xhr.status);
+//         alert(xhr.responseText);
+//       }
+// }).done(function (data) {
+//           if( data.status == 'ok')
+// 			window.location.href = "index.html";
+//       });
   });
 }
 
