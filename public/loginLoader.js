@@ -32,14 +32,12 @@ function attemptLogin()
 			async: false,
 			success: function(){
 				alert("success");
-				window.location.href = "index.html";
+				window.setTimeout(function(){ window.location = "index.html"; },1000);
 			},
 			error: function(){
 				alert("unable to log in to user account");
 			},
 			complete: function(){
-				alert("success");
-				window.location.href = "index.html";
 			}
 		});
 
