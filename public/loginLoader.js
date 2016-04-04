@@ -29,7 +29,7 @@ function attemptLogin()
 		$.ajax({
 			url: urlString,
 			dataType: 'json',
-			async: true
+			async: false
 			}).done(function(data) {
 					window.location.href = "index.html";
 			});
