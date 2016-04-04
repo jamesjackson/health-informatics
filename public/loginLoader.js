@@ -29,7 +29,7 @@ function attemptLogin()
 			dataType:'json',
 			async: false,
 			success: function(data){
-				alert("success");
+				alert("success" + data.status);
 				setTimeout(function(){ window.location.href = "index.html";alert("bitches and hoes"); },1000);
 			},
 			error: function(){
