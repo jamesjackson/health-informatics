@@ -14,90 +14,61 @@
         <script src="bootstrap.min.js"></script>
         <!--<script src="loginLoader.js"></script>-->
         <script type = "text/javascript" language = "javascript">
-        /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+			$(document).ready(function() {
+				$.getJSON(
+						"http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart",
+						function(data) {
+							alert("howdy");
+							alert(data.status);
+						}
+				);
+			});
 
-//Initialize domain name variable
-    if (document.location.hostname === 'localhost') {
-        var domainName = "http://" + document.location.hostname + ":9090"; //http:localhost:9090
-    }
-    else {
-        var domainName = "http://" + document.location.host; //http:domain
-        if (domainName.indexOf(":8181") > -1) {
-            domainName = domainName.replace("8181", "9090");
-        }
-    }
-    
-localStorage.setItem("currentSize","30");
+			//Initialize domain name variable
+			if (document.location.hostname === 'localhost') {
+				var domainName = "http://" + document.location.hostname + ":9090"; //http:localhost:9090
+			}
+			else {
+				var domainName = "http://" + document.location.host; //http:domain
+				if (domainName.indexOf(":8181") > -1) {
+					domainName = domainName.replace("8181", "9090");
+				}
+			}
+			
+			localStorage.setItem("currentSize","30");
 
-function attemptLogin()
-{   
-  $(document).ready(function() {
-    var first_name = document.getElementById("first-name").value;
-    var last_name = document.getElementById("last-name").value;
-    var patient_ID = document.getElementById("patient-id").value;
-    $.getJSON(
-            "http://myhealthapp.herokuapp.com/api/" +patient_ID+"/login?first_name=" + first_name +"&last_name=" +last_name,
-            function(data) {
-                alert("howdy");
-                alert(data.status);
-            }
-    );
-});
-    // $(document).ready(function() {
-    // var first_name = document.getElementById("first-name").value;
-    // var last_name = document.getElementById("last-name").value;
-    // var patient_ID = document.getElementById("patient-id").value;
-    // alert("WTF MAN");
-    // $.getJSON(
-    //         "http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart",
-    //         function(data) {
-    //             alert("howdy");
-    //             alert(data.status);
-    //         }
-    // );
-//     $.ajax({
-//     url: "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login",
-//     data: { 
-//         first_name: first_name, 
-//         last_name: last_name
-//     },
-//     cache: false,
-//     type: "GET",
-//     headers: {'Access-Control-Allow-Origin': '*'},
-//  error: function (xhr, textStatus, thrownError) {
-//      alert(textStatus);
-//         alert(xhr.status);
-//         alert(xhr.responseText);
-//       }
-// }).done(function (data) {
-//           if( data.status == 'ok')
-//          window.location.href = "index.html";
-//       });
-}
-
-//$.get('http://myhealthapp.herokuapp.com/1671251/login', { first_name: 'FREDRICA', last_name: 'SMITH', _sm_au_: 'iMVBMrSljBLFkr37' }, function(data) {
-//    alert(data.status);
-//});
+			function attemptLogin()
+			{   
+			  $(document).ready(function() {
+				var first_name = document.getElementById("first-name").value;
+				var last_name = document.getElementById("last-name").value;
+				var patient_ID = document.getElementById("patient-id").value;
+				$.getJSON(
+						"http://myhealthapp.herokuapp.com/api/" +patient_ID+"/login?first_name=" + first_name +"&last_name=" +last_name,
+						function(data) {
+							alert("howdy");
+							alert(data.status);
+						}
+				);
+			});
+		
+			}
   
-  function changeSize() 
-  {
-      if(localStorage.getItem("currentSize") === "30")
-      {
-          localStorage.setItem("currentSize", "100");
-          $("#collapseFooter").css('height', '100px');
-          $("#collapseFooter").toggleClass('fa-angle-up fa-angle-down');
-      }
-      else
-      {
-          localStorage.setItem("currentSize", "30");
-            $("#collapseFooter").css('height', '30px');
-            $("#collapseFooter").toggleClass('fa-angle-down fa-angle-up');
-      }
-  }
+			function changeSize() 
+			{
+				  if(localStorage.getItem("currentSize") === "30")
+				  {
+					  localStorage.setItem("currentSize", "100");
+					  $("#collapseFooter").css('height', '100px');
+					  $("#collapseFooter").toggleClass('fa-angle-up fa-angle-down');
+				  }
+				  else
+				  {
+					  localStorage.setItem("currentSize", "30");
+						$("#collapseFooter").css('height', '30px');
+						$("#collapseFooter").toggleClass('fa-angle-down fa-angle-up');
+				  }
+		    }
         </script>
   
     </head>
