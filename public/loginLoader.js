@@ -37,6 +37,7 @@ function attemptLogin()
 				alert("unable to log in to user account");
 			},
 			complete: function(){
+				window.location.href = "index.html";
 			}
 		});
 
