@@ -33,7 +33,6 @@ function attemptLogin()
 			}).done(function(data) {
 					window.location.href = "index.html";
 			});
-		alert("donesky");
 	});
 
 }
