@@ -19,14 +19,15 @@ localStorage.setItem("currentSize","30");
 
 function attemptLogin()
 {   
-    alert("new new trial");
+    $(document).ready(function() {
     var first_name = document.getElementById("first-name").value;
     var last_name = document.getElementById("last-name").value;
     var patient_ID = document.getElementById("patient-id").value;
-    //alert(first_name + " " + last_name + " " + patient_ID);
+    alert("http://myhealthapp.herokuapp.com/api/" +patient_ID+"/login?first_name=" + first_name +"&last_name=" +last_name);
     $.getJSON(
             "http://myhealthapp.herokuapp.com/api/" +patient_ID+"/login?first_name=" + first_name +"&last_name=" +last_name,
             function(data) {
+                alert("howdy");
                 alert(data.status);
             }
     );
@@ -48,6 +49,7 @@ function attemptLogin()
 //           if( data.status == 'ok')
 // 			window.location.href = "index.html";
 //       });
+  });
 }
 
 //$.get('http://myhealthapp.herokuapp.com/1671251/login', { first_name: 'FREDRICA', last_name: 'SMITH', _sm_au_: 'iMVBMrSljBLFkr37' }, function(data) {
