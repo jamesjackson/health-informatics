@@ -29,7 +29,6 @@ function attemptLogin()
 			dataType:'json',
 			async: false,
 			success: function(data){
-				alert("success" + data.status);
 				window.location.href = "index.html";
 			},
 			error: function(){
