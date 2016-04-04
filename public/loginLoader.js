@@ -28,7 +28,6 @@ function attemptLogin()
 		//alert(urlString);
 		$.ajax({
 			url: urlString,
-			dataType: 'json',
 			async: false
 			}).done(function(data) {
 					window.location.href = "index.html";
