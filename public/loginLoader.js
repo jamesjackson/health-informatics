@@ -38,7 +38,7 @@ function attemptLogin()
 				alert("could not login");
 		}
 	});
-	//alert("out");
+	alert("out");
 });
 
 }
