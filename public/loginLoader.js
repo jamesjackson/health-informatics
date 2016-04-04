@@ -38,8 +38,9 @@ function attemptLogin()
 			},
 			complete: function(){
 			}
-			});
+		});
 
+	});
 }
 
 function changeSize() 
