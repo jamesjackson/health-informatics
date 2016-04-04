@@ -19,29 +19,48 @@ localStorage.setItem("currentSize","30");
 
 function attemptLogin()
 {
+	
     var first_name = document.getElementById("first-name").value;
     var last_name = document.getElementById("last-name").value;
     var patient_ID = document.getElementById("patient-id").value;
-    alert("http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login");
+	var theUrl = "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login";
+    if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {// code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function()
+    {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            return xmlhttp.responseText;
+        }
+    }
+    xmlhttp.open("GET", theUrl, false );
+    xmlhttp.send();    
+    //alert("http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login");
     //alert(first_name + " " + last_name + " " + patient_ID);
-    $.ajax({
-    url: "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login",
-    data: { 
-        first_name: first_name, 
-        last_name: last_name
-    },
-    cache: false,
-    type: "GET",
-    headers: {'Access-Control-Allow-Origin': '*'},
-	error: function (xhr, textStatus, thrownError) {
-		alert(textStatus);
-        alert(xhr.status);
-        alert(xhr.responseText);
-      }
-}).done(function (data) {
-          if( data.status == 'ok')
-			window.location.href = "index.html";
-      });
+   // $.ajax({
+    //url: "http://myhealthapp.herokuapp.com/api/" + patient_ID + "/login",
+    //data: { 
+   //     first_name: first_name, 
+   //     last_name: last_name
+   // },
+   // cache: false,
+   // type: "GET",
+   // headers: {'Access-Control-Allow-Origin': '*'},
+	//error: function (xhr, textStatus, thrownError) {
+	//	alert(textStatus);
+    //    alert(xhr.status);
+    //    alert(xhr.responseText);
+    //  }
+//}).done(function (data) {
+ //         if( data.status == 'ok')
+//			window.location.href = "index.html";
+  //    });
 }
 
 //$.get('http://myhealthapp.herokuapp.com/1671251/login', { first_name: 'FREDRICA', last_name: 'SMITH', _sm_au_: 'iMVBMrSljBLFkr37' }, function(data) {
