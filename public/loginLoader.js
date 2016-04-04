@@ -23,7 +23,7 @@ function attemptLogin()
     var first_name = document.getElementById("first-name").value;
     var last_name = document.getElementById("last-name").value;
     var patient_ID = document.getElementById("patient-id").value;
-    alert("http://myhealthapp.herokuapp.com/api/" +patient_ID+"/login?first_name=" + first_name +"&last_name=" +last_name);
+    alert("WTF MAN");
     $.getJSON(
             "http://myhealthapp.herokuapp.com/api/5401/login?first_name=Sebastian&last_name=Bernhart",
             function(data) {
