@@ -17,7 +17,7 @@ and open the template in the editor.
         <script src="bootstrap.min.js"></script>
         <script src="analyzeLoader.js"></script>
     </head>
-    <body onload="loadImageFromCache()">
+    <body onload="setup()">
         <div id="landingBar">
             <i id="hand-icon" class="fa fa-hand-paper-o"></i>
             <span id="landingText">Skin Diagnosis</span>
@@ -29,13 +29,14 @@ and open the template in the editor.
         </div>
         <span id="subText">Analyze Condition</span>
         
-        <!-- TAKE PHOTO - UNFINISHED -->
-        <br><br>
         <div id="symptomsForm">
 	        <input id="image" type="file" accept="image/*;capture=camera" onchange="processImageFile(this);">
 	        <img id="imageViewer" class="imageViewer" />
+	        <br><br><br>
+	        <h3>Please answer the below questions to help us diagnose your issue</h3>
+	        <div id="symptomsQuestions"></div>
+	        
         </div>
-        
         
     </body>
 </html>
