@@ -59,28 +59,24 @@ and open the template in the editor.
             	Last Name &emsp;
             	<input id="lastName" style="margin-bottom: 8px" type="text" name="lastName"><br>
             	
-            	<!-- Are we keeping this? 
-            	Zip Code &emsp;
-            	<input style="margin-left: 10px;"type="text" name="zipCode"><br>
-            	 -->
-    	        
-    	        <br>
-    	        <!-- IMPLEMENT FORM TO GET PHYSICIAN INFO, SEND TO SERVER, AND SHOW PHYSICIANS BELOW -->
-    	        
             </form>
             
-            <button onclick="findPhysician()">Find Doctor</button>
-        </div>
-        
-        <div id="physicianSelect">
-            <br><br><br>
-            Please confirm that we have the correct physician by selecting yours.
+            <button onclick="findPhysicians()">Find Doctor</button>
             
-            <!-- DISPLAY PHYSICIAN SUGGESTIONS -->
+            <div id="physicianSelect">
+            	
+            	<!-- TEXT BOX TO REFLECT WHETHER PHYSICIANS ARE PRESENT OR NOT -->
+            	<p id="physicianPrompt"></p>
+            	
+            	<!-- LIST OF PHYSICIANS -->
+            	<div id="physiciansList"></div>
+            	        
+        		<!-- IF PHYSICIAN SELECTED, REVEAL BUTTON TO SEND INFORMATION TO SELECTED PHYSICIAN -->
+            	<button id="sendInfoToPhysicianButton" hidden="true">Send Information to Doctor</button>
             
+            </div>
         </div>
-        
-        <!-- IF PHYSICIAN SELECTED, REVEAL BUTTON TO SEND INFORMATION TO SELECTED PHYSICIAN -->
+
         
         
     </body>

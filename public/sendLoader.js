@@ -15,24 +15,43 @@ function goAnalyze()
     window.location.href = "analyze.html";
 }
 
-function findPhysician()
+function findPhysicians()
 {
 	var firstName = $('#firstName').val();
 	var lastName = $('#lastName').val();	
-	var url = "http://myhealthapp.herokuapp.com/api/practitioner";
-	console.log('fdskafd');
-	// ?first_name="+firstName+"&last_name="+lastName;
+	var url = "http://myhealthapp.herokuapp.com/api/practitioner?first_name="+firstName+"&last_name="+lastName;
+	console.log('About to send');
+	console.log(url);
 	
 	$.ajax({
-	    url: url,
-	    data: { 
-	        first_name: firstName, 
-	        last_name: lastName
-	    },
-	    //cache: false,
-	    type: "GET",
-	    headers: {'Access-Control-Allow-Origin': '*'}
-	}).done(console.log("fdaf"));
+		url: url,
+		dataType:'json',
+		async: false,
+		success: function(data){
+			$('#physicianPrompt').text("Please confirm that we have the correct physician by selecting yours.");
+			
+			$('#physiciansList').html(printPhysiciansHTML(data));
+			
+			$('#sendInfoToPhysicianButton').removeAttr('hidden');
+		},
+		error: function(){
+			// Hide everything and print out that no physicians could be found
+			$('#physicianPrompt').text("We're sorry. No physicians matching the name you provided could be found.");
+			$('#physiciansList').html('');
+			$('#sendInfoToPhysicianButton').attr('hidden', 'true');
+		}
+	});
+}
+
+function printPhysiciansHTML(data)
+{
+	var html = '';
+	
+	html += "<form>";
+	html += "<input type='radio' name='physician'>"+data.first_name+" "+data.last_name+"<br>";
+	html += "</form><br>";
+	
+	return html;
 }
 
 function processImageFile(input)
