@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+var globalImageVariable;
+
 
 function goIndex()
 {
@@ -43,12 +45,61 @@ function findPhysicians()
 	});
 }
 
+function sendInfoToPhysician()
+{
+	// Get User ID
+	var userID = localStorage.getItem('patientID');
+	
+	// Get Physician ID
+	var physicianID = $('input:checked').attr('name');
+	
+	// Make URL
+	var url = 'http://myhealthapp.herokuapp.com/api/'+userID+'/communication/'+physicianID;
+	
+	// Get Symptoms JSON
+	var symptoms = localStorage.getItem('symptoms');
+	var symptomsJSON = new Blob([JSON.stringify(symptoms)]);
+	
+	// Get Diagnosis JSON
+	var diagnosis = localStorage.getItem('diagnosis');
+	var diagnosisJSON = new Blob([JSON.stringify(diagnosis)]);
+	
+	// Make FormData
+	var fd = new FormData();
+	fd.append('symptoms', symptomsJSON, { type: "application/json"});
+	fd.append('diagnosis', diagnosisJSON, { type: "application/json"});
+    fd.append('photo', globalImageVariable);
+    
+	// Make POST call to server
+	$.ajax({
+        url: url,
+        data: fd,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        success: function(data){
+        	if (data.status == 'created')
+        	{
+        		console.log('success');
+        	} else {
+        		console.log('other string returned? '+data.status);
+        	}
+        	
+        },
+        failure: function(data) {
+        	console.log('failure');
+        }
+    });
+
+}
+
 function printPhysiciansHTML(data)
 {
 	var html = '';
 	
 	html += "<form>";
-	html += "<input type='radio' name='physician'>"+data.first_name+" "+data.last_name+"<br>";
+	html += "<input id='physicianSelection' type='radio' name=\'"+data.id+"\'>"+data.first_name+" "+data.last_name+" ("+data.id+")<br>";
 	html += "</form><br>";
 	
 	return html;
@@ -61,6 +112,7 @@ function processImageFile(input)
 		var reader = new FileReader();
 		reader.onload = function(image) {
 			$('#imageViewer').attr('src', image.target.result).width(240).height(160);
+			globalImageVariable = input.files[0];
 			localStorage.setItem("image", image.target.result);
 		}
 		reader.readAsDataURL(input.files[0]);

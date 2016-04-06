@@ -138,11 +138,20 @@ function submitForAnalysis()
 	// send form data to server and get diagnosis
 	var fd = new FormData();
     var photo = localStorage.getItem('image');
-    fd.append('symptoms', new Blob([JSON.stringify(symptoms_data)]), { type: "application/json"});
+    var symptomsJSON = new Blob([JSON.stringify(symptoms_data)]);
+    fd.append('symptoms', symptomsJSON, { type: "application/json"});
     fd.append('photo', globalImageVariable);
     
+    var userId = localStorage.getItem('patientID');
+    var url = 'http://myhealthapp.herokuapp.com/api/'+userId+'/condition'
+    console.log(localStorage.getItem('patientID'));
+    
+    // store symptoms to local storage
+    localStorage.setItem('symptoms', symptoms_data);
+    
+    // make call to server
     $.ajax({
-        url: 'http://myhealthapp.herokuapp.com/api/5401/condition',
+        url: url,
         data: fd,
         cache: false,
         contentType: false,
@@ -175,6 +184,9 @@ function submitForAnalysis()
         	
         	// Set Text of Decision Tree Prediction
         	$('#dt_pred').text("Decision Tree Prediction: "+data.decision_tree_pred);
+        	
+        	// Store Diagnosis to Local Storage
+        	localStorage.setItem('diagnosis', data);
         },
         failure: function(data) {
         	$('#cv_pred').text('');
