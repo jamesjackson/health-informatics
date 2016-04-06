@@ -29,6 +29,7 @@ function attemptLogin()
 			dataType:'json',
 			async: false,
 			success: function(data){
+				localStorage.setItem("patientID",patient_ID);
 				window.location.href = "index.html";
 			},
 			error: function(){
