@@ -34,8 +34,14 @@ and open the template in the editor.
 	        <img id="imageViewer" class="imageViewer" />
 	        <br><br><br>
 	        <h3>Please answer the below questions to help us diagnose your issue</h3>
-	        <div id="symptomsQuestions"></div>
+	        <div id="symptomsQuestions"></div><br>
+	        <button id="submitForAnalysisButton" hidden="true" onclick="submitForAnalysis()">Submit Data</button>
 	        
+	        <!-- Space where diagnosis is rendered -->
+	        <div id="diagnosisView">
+	        <p id="cv_pred"></p>
+	        <p id="dt_pred"></p>
+	        </div>
         </div>
         
     </body>
