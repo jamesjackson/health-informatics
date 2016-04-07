@@ -10,6 +10,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="jquery.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
         <link href="appstyle.css" rel="stylesheet" type="text/css">
         <link href="font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="bootstrap.min.css">
@@ -25,13 +26,12 @@ and open the template in the editor.
         
         <div id="subBar">           
             <button onclick="goIndex()" type="submit" class="navigationButton pure-button pure-button-primary">About</button>
-            <button onclick="goAnalyze()" type="submit" class="navigationButton pure-button pure-button-primary">Analyze</button>
         </div>
 
         <span id="subText">Send to a Doctor</span>
 
         <div id="doctorForm">
-            <br/>
+            <button onclick="goAnalyze()" type="submit" class="pure-button pure-button-primary">Return to Previous Screen</button><br><br>
             <input id="image" type="file" accept="image/*;capture=camera" onchange="processImageFile(this);">
             <img id="imageViewer" class="imageViewer" />
             
@@ -69,15 +69,21 @@ and open the template in the editor.
             	<p id="physicianPrompt"></p>
             	
             	<!-- LIST OF PHYSICIANS -->
-            	<div id="physiciansList"></div>
+            	<table id="physiciansList"style="width:50%">
+				</table>
+				<br>
             	        
         		<!-- IF PHYSICIAN SELECTED, REVEAL BUTTON TO SEND INFORMATION TO SELECTED PHYSICIAN -->
             	<button id="sendInfoToPhysicianButton" hidden="true" onclick="sendInfoToPhysician()">Send Information to Doctor</button>
             
             </div>
         </div>
-
         
+        <div id="screenTransitionPopup" hidden="true">
+        	<b id="conditionSuggestion"></b><br>
+        	<b>Your information was sent to your physician. Thank you for using our service. Click below to return to the home screen</b><br><br>
+        	<button onclick="goIndex()" type="submit" class="pure-button pure-button-primary">Home</button>
+        </div>
         
     </body>
 </html>

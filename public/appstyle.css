@@ -146,6 +146,11 @@ and open the template in the editor.
     background-color: lightgrey;
 }
 
+table, th, td {
+   border: 1px solid black;
+   text-align: center;
+}
+
 #physicianSelect
 {
     width:75%;
@@ -157,6 +162,19 @@ and open the template in the editor.
     margin-left: auto;
     margin-right: auto;
     background-color: lightgrey;
+}
+
+#screenTransitionPopup {
+	position: absolute;
+  width: 25%;
+  height: 20%;
+  z-index: 15;
+  margin: 0 0 0 0;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: white;
+  border: thin solid black;
 }
 
 .navigationButton

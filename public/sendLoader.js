@@ -81,7 +81,14 @@ function sendInfoToPhysician()
         success: function(data){
         	if (data.status == 'created')
         	{
-        		console.log('success');
+        		// show popup
+        		$('#screenTransitionPopup').removeAttr('hidden');
+            	$("#screenTransitionPopup").position({
+         		   my: "center",
+         		   at: "center",
+         		   of: window
+         		});
+            	console.log("fdafd");
         	} else {
         		console.log('other string returned? '+data.status);
         	}
@@ -97,10 +104,12 @@ function sendInfoToPhysician()
 function printPhysiciansHTML(data)
 {
 	var html = '';
-	
+	html += "<tr><th>Select</th><th>First Name</th><th>Last Name</th><th>ID</th></tr>";
+	html += "<tr><td>";
 	html += "<form>";
-	html += "<input id='physicianSelection' type='radio' name=\'"+data.id+"\'>"+data.first_name+" "+data.last_name+" ("+data.id+")<br>";
+	html += "<input id='physicianSelection' type='radio' name=\'"+data.id+"\'>";
 	html += "</form><br>";
+	html += "</td><td>"+data.first_name+"</td><td>"+data.last_name+"</td><td>"+data.id+"</td></tr>";
 	
 	return html;
 }
