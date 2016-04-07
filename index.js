@@ -326,8 +326,8 @@ function doctor_communication(req1, res1, next) {
 
                     //console.log(JSON.stringify(obj, null, 2));
 
-                    res1.send(201, {'status' : 'created'});
-                    // res1.send(201, obj);
+                    // res1.send(201, {'status' : 'created'});
+                    res1.send(201, obj.issue[0].diagnostics);
                     next();
 
                 });
