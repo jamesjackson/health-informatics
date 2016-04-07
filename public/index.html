@@ -27,13 +27,17 @@ and open the template in the editor.
             <button onclick="goAnalyze()" type="submit" class="navigationButton pure-button pure-button-primary">Analyze</button>
             <!-- <button onclick="goSendToDoctor()" type="submit" class="navigationButton pure-button pure-button-primary">Send to Doctor</button> -->
         </div>
-        <span id="subText">About Our Application</span>
+        <span id="subText">About Our App</span>
 
         <div id="infoDiv">
-            <h1>This application was created in order to provide the user with <br/>
-                a way to self-diagnose their skin conditions, and when that option <br>
-                fails, have a way to send information on their condition over to <br>
-                their personal physician. </h1>
+            <h1>This application was created in order to provide the user with a way to self-diagnose<br/>
+                their skin conditions.  In the case that our application does not adequately meet the<br/>
+                users' needs, an option is provided to send detailed information over to a personal<br/> 
+                physician for further analysis and diagnosis.<br/><br/>
+
+                To begin the self-diagnosis process, please click the button below! 
+            </h1>
+            <button id="startAnalysisButton" onclick="goAnalyze()" type="submit" class="pure-button pure-button-primary">Analyze Your Skin Condition</button>
         </div>
 
     </body>
