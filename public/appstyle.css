@@ -146,11 +146,11 @@ and open the template in the editor.
     background-color: lightgrey;
 }
 
-<<<<<<< HEAD
 table, th, td {
    border: 1px solid black;
    text-align: center;
-=======
+}
+
 #infoDiv
 {
     width: 75%;
@@ -164,7 +164,6 @@ table, th, td {
     color: white;
     text-align: center;
     background-color: #47d147;
->>>>>>> 658e5b5e51cd0e1d0810a4ffe006d1acc1baf0f7
 }
 
 #physicianSelect
