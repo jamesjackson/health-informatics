@@ -189,7 +189,10 @@ and open the template in the editor.
 
 #startAnalysisButton
 {
-    background-color:blue;
-    color:white;
+    background-color: blue;
+    width: 500px;
+    border-radius: 20px;
+    font-size: 20px;
+    color: white;
 }
 
