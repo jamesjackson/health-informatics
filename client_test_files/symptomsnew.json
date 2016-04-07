@@ -1,0 +1,15 @@
+{
+  "symptoms":
+  { "age": "adult",
+    "fever": "none",
+    "fever_timing": "n/a",
+    "rash_location_upper": true,
+    "rash_location_lower": true,
+    "rash_location_oneside": true,
+    "rash_itchy": false,
+    "rash_painful": true,
+    "exposure": false,
+    "days_since_start": 3,
+    "notes": "itching like crazy - do something soon !"
+  }
+}

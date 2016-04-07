@@ -10,6 +10,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="jquery.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
         <link href="appstyle.css" rel="stylesheet" type="text/css">
         <link href="font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="bootstrap.min.css">
@@ -25,7 +26,6 @@ and open the template in the editor.
         
         <div id="subBar">
             <button onclick="goIndex()" type="submit" class="navigationButton pure-button pure-button-primary">About</button>
-            <button onclick="goSendToDoctor()" type="submit" class="navigationButton pure-button pure-button-primary">Send to Doctor</button>
         </div>
         <span id="subText">Analyze Condition</span>
         
@@ -39,9 +39,13 @@ and open the template in the editor.
 	        
 	        <!-- Space where diagnosis is rendered -->
 	        <div id="diagnosisView">
-	        <p id="cv_pred"></p>
-	        <p id="dt_pred"></p>
 	        </div>
+        </div>
+        
+        <div id="screenTransitionPopup" hidden="true">
+        	<b id="conditionSuggestion"></b><br><br>
+        	<p>Would you like to send this information to your doctor?</p><br>
+        	<button onclick="goSendToDoctor()" type="submit" class="pure-button pure-button-primary">Send to Doctor</button>
         </div>
         
     </body>

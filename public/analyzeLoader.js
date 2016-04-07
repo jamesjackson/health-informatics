@@ -166,27 +166,45 @@ function submitForAnalysis()
         	cv_pred_text = '';
         	if (cv_pred.chicken_pox > max) {
         		max = cv_pred.chicken_pox;
-        		cv_pred_text = 'Chicken Pox';
+        		cv_pred_text = 'chicken pox';
         	}
         	if (cv_pred.measles > max) {
         		max = cv_pred.measles;
-        		cv_pred_text = 'Measles';
+        		cv_pred_text = 'measles';
         	}
         	if (cv_pred.ringworm > max) {
         		max = cv_pred.ringworm;
-        		cv_pred_text = 'Ringworm';
+        		cv_pred_text = 'ringworm';
 			}
         	if (cv_pred.shingles > max) {
         		max = cv_pred.shingles;
-				cv_pred_text = 'Shingles';
+				cv_pred_text = 'shingles';
 			}
-			$('#cv_pred').text("Computer Vision Prediction: "+cv_pred_text);
+        	
+        	var suggestedCondition;
+        	if (cv_pred_text == data.decision_tree_pred)
+    		{
+        		suggestedCondition = "Expected Condition: "+cv_pred_text;
+    		} else {
+    			suggestedCondition = "Possible Conditions: "+cv_pred_text+", "+data.decision_tree_pred;
+    		}
+        	
+        	$('#conditionSuggestion').text(suggestedCondition);
+			//$('#cv_pred').text("Computer Vision Prediction: "+cv_pred_text);
         	
         	// Set Text of Decision Tree Prediction
-        	$('#dt_pred').text("Decision Tree Prediction: "+data.decision_tree_pred);
+        	//$('#dt_pred').text("Decision Tree Prediction: "+data.decision_tree_pred);
         	
         	// Store Diagnosis to Local Storage
         	localStorage.setItem('diagnosis', data);
+        	
+        	// Show Popup window
+        	$('#screenTransitionPopup').removeAttr('hidden');
+        	$("#screenTransitionPopup").position({
+     		   my: "center",
+     		   at: "center",
+     		   of: window
+     		});
         },
         failure: function(data) {
         	$('#cv_pred').text('');
