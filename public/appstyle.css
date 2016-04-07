@@ -216,3 +216,11 @@ table, th, td {
     margin-bottom: 20px;
 }
 
+#about-hand-icon
+{
+    z-index: 1;
+    margin-top: 10px;
+    color: white;
+    font-size: 30px;
+}
+
