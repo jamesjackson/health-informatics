@@ -6,18 +6,6 @@
 
 var globalImageVariable;
 
-jQuery.extend({
-    postJSON: function(params) {
-        return jQuery.ajax(jQuery.extend(params, {
-            type: "POST",
-            data: JSON.stringify(params.data),
-            dataType: "json",
-            contentType: "application/json",
-            processData: false
-        }));
-    }
-});
-
 function setup()
 {
 	loadImageFromCache();
@@ -138,16 +126,21 @@ function submitForAnalysis()
 	// send form data to server and get diagnosis
 	var fd = new FormData();
     var photo = localStorage.getItem('image');
-    var symptomsJSON = new Blob([JSON.stringify(symptoms_data)]);
+    var symptomsJSON = JSON.stringify(symptoms_data);
+    //var symptomsJSON = new Blob([JSON.stringify(symptoms_data)]);
     fd.append('symptoms', symptomsJSON, { type: "application/json"});
     fd.append('photo', globalImageVariable);
+    //fd.append('test', 'test', {type: "application/json"});
     
     var userId = localStorage.getItem('patientID');
     var url = 'http://myhealthapp.herokuapp.com/api/'+userId+'/condition'
     console.log(localStorage.getItem('patientID'));
     
     // store symptoms to local storage
-    localStorage.setItem('symptoms', symptoms_data);
+    //console.log(JSON.stringify(symptoms_data));
+    console.log(symptomsJSON);
+    //localStorage.setItem('symptoms', JSON.stringify(symptoms_data));
+    localStorage.setItem('symptoms', JSON.stringify(symptoms_data));
     
     // make call to server
     $.ajax({

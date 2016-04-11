@@ -57,12 +57,19 @@ function sendInfoToPhysician()
 	var url = 'http://myhealthapp.herokuapp.com/api/'+userID+'/communication/'+physicianID;
 	
 	// Get Symptoms JSON
-	var symptoms = localStorage.getItem('symptoms');
-	var symptomsJSON = new Blob([JSON.stringify(symptoms)]);
+	var symptoms = JSON.parse(localStorage.getItem('symptoms'));
+	console.log(symptoms);
+	symptoms.symptoms.days_since_start = $('#days_since_start option:selected').text();
+	symptoms.symptoms.notes = $('#notes').val();
+	console.log(symptoms.symptoms.days_since_start);
+	console.log(symptoms.symptoms.notes);
+	//var symptomsJSON = new Blob([JSON.stringify(symptoms)]);
+	var symptomsJSON = JSON.stringify(symptoms);
 	
 	// Get Diagnosis JSON
 	var diagnosis = localStorage.getItem('diagnosis');
-	var diagnosisJSON = new Blob([JSON.stringify(diagnosis)]);
+	//var diagnosisJSON = new Blob([JSON.stringify(diagnosis)]);
+	var diagnosisJSON = JSON.stringify(diagnosis);
 	
 	// Make FormData
 	var fd = new FormData();
@@ -88,7 +95,6 @@ function sendInfoToPhysician()
          		   at: "center",
          		   of: window
          		});
-            	console.log("fdafd");
         	} else {
         		console.log('other string returned? '+data.status);
         	}
@@ -125,7 +131,7 @@ function processImageFile(input)
 			localStorage.setItem("image", image.target.result);
 		}
 		reader.readAsDataURL(input.files[0]);
-	}
+	}	
 }
 
 function loadImageFromCache(input)
