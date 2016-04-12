@@ -63,13 +63,11 @@ function sendInfoToPhysician()
 	symptoms.symptoms.notes = $('#notes').val();
 	console.log(symptoms.symptoms.days_since_start);
 	console.log(symptoms.symptoms.notes);
-	//var symptomsJSON = new Blob([JSON.stringify(symptoms)]);
-	var symptomsJSON = JSON.stringify(symptoms);
+	var symptomsJSON = new Blob([JSON.stringify(symptoms)]);
 	
 	// Get Diagnosis JSON
-	var diagnosis = localStorage.getItem('diagnosis');
-	//var diagnosisJSON = new Blob([JSON.stringify(diagnosis)]);
-	var diagnosisJSON = JSON.stringify(diagnosis);
+	var diagnosis = JSON.parse(localStorage.getItem('diagnosis'));
+	var diagnosisJSON = new Blob([JSON.stringify(diagnosis)]);
 	
 	// Make FormData
 	var fd = new FormData();
@@ -86,6 +84,7 @@ function sendInfoToPhysician()
         processData: false,
         type: 'POST',
         success: function(data){
+        	console.log(data);
         	if (data.status == 'created')
         	{
         		// show popup
