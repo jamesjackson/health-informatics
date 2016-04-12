@@ -87,7 +87,14 @@ function sendInfoToPhysician()
         	console.log(data);
         	if (data.status == 'created')
         	{
+        		// get resource id from description string
+        		var descriptionString = data.description;
+        		var tokens = descriptionString.split('/');
+        		var communicationId = tokens[1];
+        		console.log(communicationId);
+        		
         		// show popup
+        		$('#commId').text("Communication ID: "+communicationId);
         		$('#screenTransitionPopup').removeAttr('hidden');
             	$("#screenTransitionPopup").position({
          		   my: "center",
