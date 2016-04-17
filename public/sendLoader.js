@@ -73,7 +73,7 @@ function sendInfoToPhysician()
 	var fd = new FormData();
 	fd.append('symptoms', symptomsJSON, { type: "application/json"});
 	fd.append('diagnosis', diagnosisJSON, { type: "application/json"});
-    fd.append('photo', globalImageVariable);
+	fd.append('photo', globalImageVariable);
     
 	// Make POST call to server
 	$.ajax({
@@ -133,17 +133,22 @@ function processImageFile(input)
 		var reader = new FileReader();
 		reader.onload = function(image) {
 			$('#imageViewer').attr('src', image.target.result).width(240).height(160);
-			globalImageVariable = input.files[0];
 			localStorage.setItem("image", image.target.result);
+			//globalImageVariable = localStorage.getItem("image");
+			globalImageVariable = input.files[0];
+			localStorage.setItem("imageFile", input.files[0]);
 		}
 		reader.readAsDataURL(input.files[0]);
-	}	
+	}
 }
 
 function loadImageFromCache(input)
 {
-	var image = localStorage.getItem("image");
-	$('#imageViewer').attr('src', image).width(240).height(160); 
+	image = localStorage.getItem("image");
+	$('#imageViewer').attr('src', image).width(240).height(160);
+	console.log(convertDataURIToBinary(image));
+	globalImageVariable = new Blob([convertDataURIToBinary(image)], {type: "image/jpeg"});
+	console.log(globalImageVariable);
 }
 
 

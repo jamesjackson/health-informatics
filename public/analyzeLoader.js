@@ -5,6 +5,7 @@
  */
 
 var globalImageVariable;
+var BASE64_MARKER = ';base64,';
 
 function setup()
 {
@@ -47,6 +48,7 @@ function processImageFile(input)
 		reader.onload = function(image) {
 			$('#imageViewer').attr('src', image.target.result).width(240).height(160);
 			localStorage.setItem("image", image.target.result);
+			//globalImageVariable = localStorage.getItem("image");
 			globalImageVariable = input.files[0];
 			localStorage.setItem("imageFile", input.files[0]);
 		}
@@ -128,6 +130,10 @@ function submitForAnalysis()
     var photo = localStorage.getItem('image');
     var symptomsJSON = new Blob([JSON.stringify(symptoms_data)]);
     fd.append('symptoms', symptomsJSON, { type: "application/json"});
+    
+    console.log(globalImageVariable);
+    //var photoBlob = new Blob(globalImageVariable, {type: "image/jpeg"});
+    //fd.append('photo', photoBlob);
     fd.append('photo', globalImageVariable);
     
     var userId = localStorage.getItem('patientID');
@@ -216,6 +222,23 @@ function getBooleanFromSelect(id)
 
 function loadImageFromCache(input)
 {
-	var image = localStorage.getItem("image");
-	$('#imageViewer').attr('src', image).width(240).height(160); 
+	image = localStorage.getItem("image");
+	$('#imageViewer').attr('src', image).width(240).height(160);
+	console.log(convertDataURIToBinary(image));
+	globalImageVariable = new Blob([convertDataURIToBinary(image)], {type: "image/jpeg"});
+	console.log(globalImageVariable);
+}
+
+
+function convertDataURIToBinary(dataURI) {
+  var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+  var base64 = dataURI.substring(base64Index);
+  var raw = window.atob(base64);
+  var rawLength = raw.length;
+  var array = new Uint8Array(new ArrayBuffer(rawLength));
+
+  for(i = 0; i < rawLength; i++) {
+    array[i] = raw.charCodeAt(i);
+  }
+  return array;
 }
