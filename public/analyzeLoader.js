@@ -224,9 +224,15 @@ function loadImageFromCache(input)
 {
 	image = localStorage.getItem("image");
 	$('#imageViewer').attr('src', image).width(240).height(160);
-	console.log(convertDataURIToBinary(image));
-	globalImageVariable = new Blob([convertDataURIToBinary(image)], {type: "image/jpeg"});
-	console.log(globalImageVariable);
+	if (image === null || image === 'undefined')
+	{
+	}
+	else
+	{
+		console.log(convertDataURIToBinary(image));
+		globalImageVariable = new Blob([convertDataURIToBinary(image)], {type: "image/jpeg"});
+		console.log(globalImageVariable);		
+	}
 }
 
 
