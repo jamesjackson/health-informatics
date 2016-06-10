@@ -22,7 +22,7 @@
 
 
 var indico = require('indico.io');
-indico.apiKey =  '98c1cd8fda1c2c7ea39a702e09ec0f4c';
+indico.apiKey =  '*****';
 
 var collection = indico.Collection('my_collection200');
 
